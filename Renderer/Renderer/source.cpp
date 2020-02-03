@@ -1,9 +1,9 @@
-#include <iostream>
 #include "glm.hpp"
+#include "glfw3.h"
 
 int main()
 {
-	std::cout << "Hello" << std::endl;
-
+	glfwInit();
+	glfwTerminate();
 	return 0;
 }
