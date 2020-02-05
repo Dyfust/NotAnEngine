@@ -31,95 +31,78 @@ int main()
 		return -3;
 	}
 
-	//const int num_verts = 36;
-	//vertex verticies[num_verts]
-	//{
-	//	// Down
-	//	vertex(glm::vec3(-0.5f, -0.5, 0.5f), glm::vec3(0, -1, 0)),
-	//	vertex(glm::vec3(0.5f, -0.5, 0.5f), glm::vec3(0, -1, 0)),
-	//	vertex(glm::vec3(-0.5f, -0.5, -0.5f), glm::vec3(0, -1, 0)),
-	//	vertex(glm::vec3(0.5f, -0.5, 0.5f), glm::vec3(0, -1, 0)),
-	//	vertex(glm::vec3(-0.5f, -0.5, -0.5f), glm::vec3(0, -1, 0)),
-	//	vertex(glm::vec3(0.5f, -0.5, -0.5f), glm::vec3(0, -1, 0)),
-
-	//	// Up
-	//	vertex(glm::vec3(-0.5f, 0.5, 0.5f), glm::vec3(0, 1, 0)),
-	//	vertex(glm::vec3(0.5f, 0.5, 0.5f), glm::vec3(0, 1, 0)),
-	//	vertex(glm::vec3(-0.5f, 0.5, -0.5f), glm::vec3(0, 1, 0)),
-	//	vertex(glm::vec3(0.5f, 0.5, 0.5f), glm::vec3(0, 1, 0)),
-	//	vertex(glm::vec3(-0.5f, 0.5, -0.5f), glm::vec3(0, 1, 0)),
-	//	vertex(glm::vec3(0.5f, 0.5, -0.5f), glm::vec3(0, 1, 0)),
-
-	//	// Back
-	//	vertex(glm::vec3(-0.5f, 0.5f, -0.5), glm::vec3(0, 0, -1)),
-	//	vertex(glm::vec3(0.5f, 0.5f, -0.5), glm::vec3(0, 0, -1)),
-	//	vertex(glm::vec3(-0.5f, -0.5f, -0.5), glm::vec3(0, 0, -1)),
-	//	vertex(glm::vec3(0.5f, 0.5f, -0.5), glm::vec3(0, 0, -1)),
-	//	vertex(glm::vec3(-0.5f, -0.5f, -0.5), glm::vec3(0, 0, -1)),
-	//	vertex(glm::vec3(0.5f, -0.5f, -0.5), glm::vec3(0, 0, -1)),
-
-	//	// Front
-	//	vertex(glm::vec3(-0.5f, 0.5f, 0.5), glm::vec3(0, 0, 1)),
-	//	vertex(glm::vec3(0.5f, 0.5f, 0.5), glm::vec3(0, 0, 1)),
-	//	vertex(glm::vec3(-0.5f, -0.5f, 0.5), glm::vec3(0, 0, 1)),
-	//	vertex(glm::vec3(0.5f, 0.5f, 0.5), glm::vec3(0, 0, 1)),
-	//	vertex(glm::vec3(-0.5f, -0.5f, 0.5), glm::vec3(0, 0, 1)),
-	//	vertex(glm::vec3(0.5f, -0.5f, 0.5), glm::vec3(0, 0, 1)),
-
-	//	// Right
-	//	vertex(glm::vec3(0.5f, 0.5f, -0.5f), glm::vec3(1, 0, 0)),
-	//	vertex(glm::vec3(0.5f, 0.5f, 0.5f), glm::vec3(1, 0, 0)),
-	//	vertex(glm::vec3(0.5f, -0.5f, -0.5f), glm::vec3(1, 0, 0)),
-	//	vertex(glm::vec3(0.5f, 0.5f, 0.5f), glm::vec3(1, 0, 0)),
-	//	vertex(glm::vec3(0.5f, -0.5f, -0.5f), glm::vec3(1, 0, 0)),
-	//	vertex(glm::vec3(0.5f, -0.5f, 0.5f), glm::vec3(1, 0, 0)),
-
-	//	// Left
-	//	vertex(glm::vec3(-0.5f, 0.5f, -0.5f), glm::vec3(-1, 0, 0)),
-	//	vertex(glm::vec3(-0.5f, 0.5f, 0.5f), glm::vec3(-1, 0, 0)),
-	//	vertex(glm::vec3(-0.5f, -0.5f, -0.5f), glm::vec3(-1, 0, 0)),
-	//	vertex(glm::vec3(-0.5f, 0.5f, 0.5f), glm::vec3(-1, 0, 0)),
-	//	vertex(glm::vec3(-0.5f, -0.5f, -0.5f), glm::vec3(-1, 0, 0)),
-	//	vertex(glm::vec3(-0.5f, -0.5f, 0.5f), glm::vec3(-1, 0, 0))
-	//};
-
-	const int num_verts = 8;
-	glm::vec3 verticies[num_verts]
+	const int num_verts = 24;
+	vertex verticies[num_verts]
 	{
-		// Down
-		glm::vec3(0.5f, -0.5, 0.5f), // towards bottom right
-		glm::vec3(-0.5f, -0.5, 0.5f), // towards bottom left
+		// AWAY FACE
+		vertex(glm::vec3(-0.5f, 0.5f, -1.0f), glm::vec3(0, 0, -1)),  // Away top left 0
+		vertex(glm::vec3(0.5f, 0.5f, -1.0f), glm::vec3(0, 0, -1)), // Away top right 1
+		vertex(glm::vec3(-0.5f, -0.5f, -1.0f), glm::vec3(0, 0, -1)), // Away bottom left 2
+		vertex(glm::vec3(0.5f, -0.5f, -1.0f), glm::vec3(0, 0, -1)), // Away bottom rigt 3
 
-		glm::vec3(-0.5f, -0.5, -0.5f), // away bottom left
-		glm::vec3(0.5f, -0.5, -0.5f), // away bottom right
+		// TOWARDS FACE
+		vertex(glm::vec3(-0.5f, 0.5f, 1.0f), glm::vec3(0, 0, 1)), // Towards top left 4
+		vertex(glm::vec3(0.5f, 0.5f, 1.0f), glm::vec3(0, 0, 1)), // Towards top right 5
+		vertex(glm::vec3(-0.5f, -0.5f, 1.0f), glm::vec3(0, 0, 1)), // Towards bottom left 6
+		vertex(glm::vec3(0.5f, -0.5f, 1.0f), glm::vec3(0, 0, 1)), // Towards bottom right 7
 
-		glm::vec3(0.5f, 0.5, 0.5f), // towards top right
-		glm::vec3(-0.5f, 0.5, 0.5f), // towards top left
+		// LEFT FACE
+		vertex(glm::vec3(-1.0f, 0.5f, -0.5f), glm::vec3(-1, 0, 0)),  // Away top left 8
+		vertex(glm::vec3(-1.0f, 0.5f, 0.5f), glm::vec3(-1, 0, 0)), // Towards top left 9
+		vertex(glm::vec3(-1.0f, -0.5f, -0.5f), glm::vec3(-1, 0, 0)), // Away bottom left 10
+		vertex(glm::vec3(-1.0f, -0.5f, 0.5f), glm::vec3(-1, 0, 0)), // Towards bottom left 11
 
-		glm::vec3(-0.5f, 0.5, -0.5f), // away top left
-		glm::vec3(0.5f, 0.5, -0.5f) // away top right
+		// RIGHT FACE
+		vertex(glm::vec3(1.0f, 0.5f, -0.5f), glm::vec3(1, 0, 0)),  // Away top right 12
+		vertex(glm::vec3(1.0f, 0.5f, 0.5f), glm::vec3(1, 0, 0)), // Towards top right 13
+		vertex(glm::vec3(1.0f, -0.5f, -0.5f), glm::vec3(1, 0, 0)), // Away bottom right 14
+		vertex(glm::vec3(1.0f, -0.5f, 0.5f), glm::vec3(1, 0, 0)), // Towards bottom right 15
+
+		// BOTTOM FACE
+		vertex(glm::vec3(-0.5f, -0.5f, -0.5f), glm::vec3(0, -1, 0)), // Away bottom left 16
+		vertex(glm::vec3(0.5f, -0.5f, -0.5f), glm::vec3(0, -1, 0)), // Away bottom right 17
+		vertex(glm::vec3(-0.5f, -0.5f, 0.5f), glm::vec3(0, -1, 0)), // Towards bottom left 18
+		vertex(glm::vec3(0.5f, -0.5f, 0.5f), glm::vec3(0, -1, 0)), // Towards bottom right 19
+
+		// TOP FACE
+		vertex(glm::vec3(-0.5f, 0.5f, -0.5f), glm::vec3(0, 1, 0)),  // Away top left 20
+		vertex(glm::vec3(0.5f, 0.5f, -0.5f), glm::vec3(0, -1, 0)),  // Away top right 21
+		vertex(glm::vec3(-0.5f, 0.5f, 0.5f), glm::vec3(0, -1, 0)), // Towards top left 22
+		vertex(glm::vec3(0.5f, 0.5f, 0.5f), glm::vec3(0, -1, 0)) // Towards top right 23
+	};
+	// BACK, RIGHT BROKEN
+	const int index_buffer_size = 36;
+	int index_buffer[3 * index_buffer_size]
+	{
+		// AWAY
+		1,2,0,
+		3,2,1,
+
+		// TOWARDS
+		4,6,5,
+		5,6,7,
+
+		// LEFT
+		8,10,9,
+		9,10,11,
+
+		// RIGHT
+		12,14,13,
+		13,14,15,
+
+		// BOTTOM 
+		16,18,17,
+		17,18,19,
+
+		// TOP
+		20,22,21,
+		21,22,23
 	};
 
-	const int num_tris = 2;
-	int index_buffer[3 * num_tris]
-	{
-		// Bottom face
-		3, 2, 1
-		//3, 2, 0,
 
-		// Top face
-		//7, 6, 5
-
-	};
-
-	glm::mat4 model = glm::mat4(1.0f);
-
-	glm::vec4 color = glm::vec4(1.0f, 0.0f, 0.0f, 0.0f);
-	
-	camera* camera_ptr = new camera();
-
-	// Load mesh.
+	// Vertex array object
 	uint VAO;
+	// Vertex buffer object
 	uint VBO;
 	uint IBO;
 
@@ -129,19 +112,28 @@ int main()
 
 	glBindVertexArray(VAO);
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBufferData(GL_ARRAY_BUFFER, num_verts * sizeof(glm::vec3), verticies, GL_STATIC_DRAW);
-
+	glBufferData(GL_ARRAY_BUFFER, num_verts * sizeof(vertex), verticies, GL_STATIC_DRAW);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IBO);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, num_tris * sizeof(int), index_buffer, GL_STATIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, index_buffer_size * sizeof(int), index_buffer, GL_STATIC_DRAW);
 
 	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(glm::vec3), 0);
+	glEnableVertexAttribArray(1);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(vertex), 0);
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(vertex), (GLvoid*)sizeof(glm::vec3));
 
 	glBindVertexArray(0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER , 0);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
-	// Load shaders.
+	// ---------------
+
+	glm::mat4 model = glm::mat4(1.0f);
+
+	glm::vec4 color = glm::vec4(1.0f, 0.0f, 0.0f, 0.0f);
+	
+	camera* camera_ptr = new camera();
+
+	// Load vertex shader.
 	uint vertex_shader_ID;
 	uint fragment_shader_ID;
 
@@ -169,9 +161,10 @@ int main()
 	glGetShaderiv(vertex_shader_ID, GL_COMPILE_STATUS, &success);
 	if (success == GL_FALSE)
 	{
-		return -4;
+		printf("Failed to load vertex shader\n");
 	}
 
+	// Load fragment shader
 	std::ifstream frag_file_stream("..\\Shaders\\simple_frag.glsl", std::ifstream::in);
 	std::stringstream fragment_string_stream;
 	if (frag_file_stream.is_open())
@@ -191,7 +184,7 @@ int main()
 	glGetShaderiv(fragment_shader_ID, GL_COMPILE_STATUS, &success);
 	if (success == GL_FALSE)
 	{
-		return -4;
+		printf("Failed to load fragment shader\n");
 	}
 	
 	// Shader program
@@ -206,6 +199,7 @@ int main()
 	glGetProgramiv(shader_program_ID, GL_LINK_STATUS, &success);
 	if (success == GL_FALSE)
 	{
+		printf("Failed to link shaders\n");
 		GLint log_length = 0;
 		glGetProgramiv(shader_program_ID, GL_INFO_LOG_LENGTH, &log_length);
 		char* log = new char[log_length];
@@ -217,15 +211,16 @@ int main()
 		return -5;
 	}
 
-	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	glPolygonMode(GL_BACK, GL_LINE);
 
 	// Clear color.
-	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 	while (glfwWindowShouldClose(window) == false && glfwGetKey(window, GLFW_KEY_ESCAPE) != GLFW_PRESS)
 	{
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		//model = glm::rotate(model, 0.016f, glm::vec3(0.707f, 0.707f, 0));
+		model = glm::rotate(model, 0.016f / 3.0f, glm::vec3(1, 0, 0));
+		glm::vec3 light_source = glm::vec3(0, -1, 0) * -1.0f;
 
 		glUseProgram(shader_program_ID);
 		auto uniform_location = glGetUniformLocation(shader_program_ID, "projection_view_matrix");
@@ -237,9 +232,12 @@ int main()
 		uniform_location = glGetUniformLocation(shader_program_ID, "color");
 		glUniform4fv(uniform_location, 1, glm::value_ptr(color));
 
+		uniform_location = glGetUniformLocation(shader_program_ID, "light_source");
+		glUniform3fv(uniform_location, 1, glm::value_ptr(light_source));
+
 		glBindVertexArray(VAO);
 		//glDrawArrays(GL_TRIANGLES, 0, num_verts);
-		glDrawElements(GL_TRIANGLES, num_tris, GL_UNSIGNED_INT, 0);
+		glDrawElements(GL_TRIANGLES, index_buffer_size, GL_UNSIGNED_INT, 0);
 
 		glfwSwapBuffers(window);
 		glfwPollEvents();
