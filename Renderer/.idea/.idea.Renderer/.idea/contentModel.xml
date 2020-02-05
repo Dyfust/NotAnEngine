@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ContentModelStore">
+    <e p="C:\Users\Rey\.Rider2019.3\system\extResources" t="IncludeRecursive" />
+    <e p="C:\Users\Rey\.Rider2019.3\system\resharper-host\local\Transient\ReSharperHost\v193\SolutionCaches\_Renderer.13054145.00" t="ExcludeRecursive" />
+    <e p="C:\Users\Rey\Desktop\Repos\Renderer\Renderer" t="IncludeFlat">
+      <e p="Dependencies\glcore" t="Include">
+        <e p="gl_core_4_5.c" t="Include" />
+      </e>
+      <e p="packages" t="ExcludeRecursive" />
+      <e p="Renderer" t="IncludeRecursive">
+        <e p="camera.cpp" t="Include" />
+        <e p="camera.h" t="Include" />
+        <e p="main.cpp" t="Include" />
+        <e p="Renderer.vcxproj" t="IncludeRecursive" />
+        <e p="vertex.cpp" t="Include" />
+        <e p="vertex.h" t="Include" />
+        <e p="x64\Debug" t="ExcludeRecursive" />
+      </e>
+      <e p="Renderer.sln" t="IncludeFlat" />
+      <e p="x64\Debug" t="ExcludeRecursive" />
+    </e>
+  </component>
+</project>

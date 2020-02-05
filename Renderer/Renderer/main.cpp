@@ -129,7 +129,7 @@ int main()
 
 	glm::mat4 model = glm::mat4(1.0f);
 
-	glm::vec4 color = glm::vec4(1.0f, 0.0f, 0.0f, 0.0f);
+	glm::vec4 color = glm::vec4(1.0f, 0.0f, 0.0f, 1.0f);
 	
 	camera* camera_ptr = new camera();
 
@@ -213,14 +213,16 @@ int main()
 
 	//glPolygonMode(GL_BACK, GL_LINE);
 	
-	glDisable(GL_CULL_FACE);
+	//glDisable(GL_CULL_FACE);
 	// Clear color.
-	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+	model = glm::rotate(model, 3.14f / 4, glm::vec3(0, 1, 0));
+	glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
+	glEnable(GL_DEPTH_TEST);
 	while (glfwWindowShouldClose(window) == false && glfwGetKey(window, GLFW_KEY_ESCAPE) != GLFW_PRESS)
 	{
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		model = glm::rotate(model, 0.016f / 3.0f, glm::vec3(0, 1, 0));
+		model = glm::rotate(model, 0.016f / 3.0f, glm::vec3(0.707, 0.707, 0));
 		glm::vec3 light_source = glm::vec3(0, 0, 5);
 
 		glUseProgram(shader_program_ID);

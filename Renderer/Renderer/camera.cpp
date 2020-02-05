@@ -3,7 +3,7 @@
 camera::camera()
 {
 	set_perspective(default_fov, default_aspect_ratio, default_near, default_far);
-	set_lookat(glm::vec3(0, 0, 2), glm::vec3(0), glm::vec3(0, 1, 0));
+	set_lookat(glm::vec3(0, 0, 5), glm::vec3(0), glm::vec3(0, 1, 0));
 }
 
 camera::camera(float fov, float aspect_ratio, float near, float far)
