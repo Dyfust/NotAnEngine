@@ -35,28 +35,28 @@ int main()
 	vertex verticies[num_verts]
 	{
 		// AWAY FACE
-		vertex(glm::vec3(-0.5f, 0.5f, -1.0f), glm::vec3(0, 0, -1)),  // Away top left 0
-		vertex(glm::vec3(0.5f, 0.5f, -1.0f), glm::vec3(0, 0, -1)), // Away top right 1
-		vertex(glm::vec3(-0.5f, -0.5f, -1.0f), glm::vec3(0, 0, -1)), // Away bottom left 2
-		vertex(glm::vec3(0.5f, -0.5f, -1.0f), glm::vec3(0, 0, -1)), // Away bottom rigt 3
+		vertex(glm::vec3(-0.5f, 0.5f, -0.5f), glm::vec3(0, 0, -1)),  // Away top left 0
+		vertex(glm::vec3(0.5f, 0.5f, -0.5f), glm::vec3(0, 0, -1)), // Away top right 1
+		vertex(glm::vec3(-0.5f, -0.5f, -0.5f), glm::vec3(0, 0, -1)), // Away bottom left 2
+		vertex(glm::vec3(0.5f, -0.5f, -0.5f), glm::vec3(0, 0, -1)), // Away bottom rigt 3
 
 		// TOWARDS FACE
-		vertex(glm::vec3(-0.5f, 0.5f, 1.0f), glm::vec3(0, 0, 1)), // Towards top left 4
-		vertex(glm::vec3(0.5f, 0.5f, 1.0f), glm::vec3(0, 0, 1)), // Towards top right 5
-		vertex(glm::vec3(-0.5f, -0.5f, 1.0f), glm::vec3(0, 0, 1)), // Towards bottom left 6
-		vertex(glm::vec3(0.5f, -0.5f, 1.0f), glm::vec3(0, 0, 1)), // Towards bottom right 7
+		vertex(glm::vec3(-0.5f, 0.5f, 0.5f), glm::vec3(0, 0, 1)), // Towards top left 4
+		vertex(glm::vec3(0.5f, 0.5f, 0.5f), glm::vec3(0, 0, 1)), // Towards top right 5
+		vertex(glm::vec3(-0.5f, -0.5f, 0.5f), glm::vec3(0, 0, 1)), // Towards bottom left 6
+		vertex(glm::vec3(0.5f, -0.5f, 0.5f), glm::vec3(0, 0, 1)), // Towards bottom right 7
 
 		// LEFT FACE
-		vertex(glm::vec3(-1.0f, 0.5f, -0.5f), glm::vec3(-1, 0, 0)),  // Away top left 8
-		vertex(glm::vec3(-1.0f, 0.5f, 0.5f), glm::vec3(-1, 0, 0)), // Towards top left 9
-		vertex(glm::vec3(-1.0f, -0.5f, -0.5f), glm::vec3(-1, 0, 0)), // Away bottom left 10
-		vertex(glm::vec3(-1.0f, -0.5f, 0.5f), glm::vec3(-1, 0, 0)), // Towards bottom left 11
+		vertex(glm::vec3(-0.5f, 0.5f, -0.5f), glm::vec3(-1, 0, 0)),  // Away top left 8
+		vertex(glm::vec3(-0.5f, 0.5f, 0.5f), glm::vec3(-1, 0, 0)), // Towards top left 9
+		vertex(glm::vec3(-0.5f, -0.5f, -0.5f), glm::vec3(-1, 0, 0)), // Away bottom left 10
+		vertex(glm::vec3(-0.5f, -0.5f, 0.5f), glm::vec3(-1, 0, 0)), // Towards bottom left 11
 
 		// RIGHT FACE
-		vertex(glm::vec3(1.0f, 0.5f, -0.5f), glm::vec3(1, 0, 0)),  // Away top right 12
-		vertex(glm::vec3(1.0f, 0.5f, 0.5f), glm::vec3(1, 0, 0)), // Towards top right 13
-		vertex(glm::vec3(1.0f, -0.5f, -0.5f), glm::vec3(1, 0, 0)), // Away bottom right 14
-		vertex(glm::vec3(1.0f, -0.5f, 0.5f), glm::vec3(1, 0, 0)), // Towards bottom right 15
+		vertex(glm::vec3(0.5f, 0.5f, -0.5f), glm::vec3(1, 0, 0)),  // Away top right 12
+		vertex(glm::vec3(0.5f, 0.5f, 0.5f), glm::vec3(1, 0, 0)), // Towards top right 13
+		vertex(glm::vec3(0.5f, -0.5f, -0.5f), glm::vec3(1, 0, 0)), // Away bottom right 14
+		vertex(glm::vec3(0.5f, -0.5f, 0.5f), glm::vec3(1, 0, 0)), // Towards bottom right 15
 
 		// BOTTOM FACE
 		vertex(glm::vec3(-0.5f, -0.5f, -0.5f), glm::vec3(0, -1, 0)), // Away bottom left 16
@@ -66,9 +66,9 @@ int main()
 
 		// TOP FACE
 		vertex(glm::vec3(-0.5f, 0.5f, -0.5f), glm::vec3(0, 1, 0)),  // Away top left 20
-		vertex(glm::vec3(0.5f, 0.5f, -0.5f), glm::vec3(0, -1, 0)),  // Away top right 21
-		vertex(glm::vec3(-0.5f, 0.5f, 0.5f), glm::vec3(0, -1, 0)), // Towards top left 22
-		vertex(glm::vec3(0.5f, 0.5f, 0.5f), glm::vec3(0, -1, 0)) // Towards top right 23
+		vertex(glm::vec3(0.5f, 0.5f, -0.5f), glm::vec3(0, 1, 0)),  // Away top right 21
+		vertex(glm::vec3(-0.5f, 0.5f, 0.5f), glm::vec3(0, 1, 0)), // Towards top left 22
+		vertex(glm::vec3(0.5f, 0.5f, 0.5f), glm::vec3(0, 1, 0)) // Towards top right 23
 	};
 	// BACK, RIGHT BROKEN
 	const int index_buffer_size = 36;
@@ -211,16 +211,17 @@ int main()
 		return -5;
 	}
 
-	glPolygonMode(GL_BACK, GL_LINE);
-
+	//glPolygonMode(GL_BACK, GL_LINE);
+	
+	glDisable(GL_CULL_FACE);
 	// Clear color.
 	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 	while (glfwWindowShouldClose(window) == false && glfwGetKey(window, GLFW_KEY_ESCAPE) != GLFW_PRESS)
 	{
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		model = glm::rotate(model, 0.016f / 3.0f, glm::vec3(1, 0, 0));
-		glm::vec3 light_source = glm::vec3(0, -1, 0) * -1.0f;
+		model = glm::rotate(model, 0.016f / 3.0f, glm::vec3(0, 1, 0));
+		glm::vec3 light_source = glm::vec3(0, 0, 5);
 
 		glUseProgram(shader_program_ID);
 		auto uniform_location = glGetUniformLocation(shader_program_ID, "projection_view_matrix");
