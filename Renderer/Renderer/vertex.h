@@ -2,13 +2,12 @@
 #include "ext.hpp"
 #pragma once
 
-struct vertex
+struct Vertex
 {
 public:
 	glm::vec3 position;
 	glm::vec3 normal;
 
-	vertex(glm::vec3 position, glm::vec3 normal);
-	vertex(glm::vec3 position);
+	Vertex(glm::vec3 position, glm::vec3 normal);
+	Vertex(glm::vec3 position);
 };
-
