@@ -2,10 +2,9 @@
 #include "gl_core_4_5.h"
 #include "glfw3.h"
 #include "ext.hpp"
-#include "fstream"
-#include "sstream"
 #include "camera.h"
 #include "vertex.h"
+#include "Shader.h"
 
 using uint = unsigned int;
 int main()
@@ -30,6 +29,14 @@ int main()
 
 		return -3;
 	}
+
+	// ---------------
+
+	camera* camera_ptr = new camera();
+	glm::mat4 model = glm::mat4(1.0f);
+	model = glm::rotate(model, 3.14f / 4, glm::vec3(0, 1, 0));
+	glm::vec4 color = glm::vec4(1.0f, 0.0f, 0.0f, 1.0f);
+	glm::vec3 lightSource = glm::vec3(0, 0, 5);
 
 	const int num_verts = 24;
 	Vertex verticies[num_verts]
@@ -99,7 +106,6 @@ int main()
 		21,22,23
 	};
 
-
 	// Vertex array object
 	uint VAO;
 	// Vertex buffer object
@@ -125,121 +131,24 @@ int main()
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
-	// ---------------
-
-	glm::mat4 model = glm::mat4(1.0f);
-
-	glm::vec4 color = glm::vec4(1.0f, 0.0f, 0.0f, 1.0f);
+	// Shader
+	Shader basicShader = Shader("..\\Shaders\\simple_vertex.glsl", "..\\Shaders\\simple_frag.glsl");
+	basicShader.Bind();
+	basicShader.SetUniform3fv("light_source", lightSource);
+	basicShader.SetUniform4fv("color", color);
 	
-	camera* camera_ptr = new camera();
-
-	// Load vertex shader.
-	uint vertex_shader_ID;
-	uint fragment_shader_ID;
-
-	std::string shader_data;
-	GLint success = GL_FALSE;
-
-	const char* data;
-
-	std::ifstream vert_file_stream("..\\Shaders\\simple_vertex.glsl", std::ifstream::in);
-	std::stringstream vertex_string_stream;
-
-	if (vert_file_stream.is_open())
-	{
-		vertex_string_stream << vert_file_stream.rdbuf();
-		shader_data = vertex_string_stream.str();
-		vert_file_stream.close();
-	}
-
-	data = shader_data.c_str();
-	vertex_shader_ID = glCreateShader(GL_VERTEX_SHADER);
-
-	glShaderSource(vertex_shader_ID, 1, (const GLchar**)&data, 0);
-	glCompileShader(vertex_shader_ID);
-
-	glGetShaderiv(vertex_shader_ID, GL_COMPILE_STATUS, &success);
-	if (success == GL_FALSE)
-	{
-		printf("Failed to load vertex shader\n");
-	}
-
-	// Load fragment shader
-	std::ifstream frag_file_stream("..\\Shaders\\simple_frag.glsl", std::ifstream::in);
-	std::stringstream fragment_string_stream;
-	if (frag_file_stream.is_open())
-	{
-		fragment_string_stream << frag_file_stream.rdbuf();
-		shader_data = fragment_string_stream.str();
-		frag_file_stream.close();
-	}
-
-	fragment_shader_ID = glCreateShader(GL_FRAGMENT_SHADER);
-	data = shader_data.c_str();
-
-	glShaderSource(fragment_shader_ID, 1, (const GLchar**)&data, 0);
-	glCompileShader(fragment_shader_ID);
-
-	success = GL_FALSE;
-	glGetShaderiv(fragment_shader_ID, GL_COMPILE_STATUS, &success);
-	if (success == GL_FALSE)
-	{
-		printf("Failed to load fragment shader\n");
-	}
-	
-	// Shader program
-	uint shader_program_ID = glCreateProgram();
-
-	glAttachShader(shader_program_ID, vertex_shader_ID);
-	glAttachShader(shader_program_ID, fragment_shader_ID);
-
-	glLinkProgram(shader_program_ID);
-
-	success = GL_FALSE;
-	glGetProgramiv(shader_program_ID, GL_LINK_STATUS, &success);
-	if (success == GL_FALSE)
-	{
-		printf("Failed to link shaders\n");
-		GLint log_length = 0;
-		glGetProgramiv(shader_program_ID, GL_INFO_LOG_LENGTH, &log_length);
-		char* log = new char[log_length];
-		glGetProgramInfoLog(shader_program_ID, log_length, 0, log);
-
-		std::string log_message(log);
-		printf(log_message.c_str());
-		delete[] log;
-		return -5;
-	}
-
-	//glPolygonMode(GL_BACK, GL_LINE);
-	
-	//glDisable(GL_CULL_FACE);
-	// Clear color.
-	model = glm::rotate(model, 3.14f / 4, glm::vec3(0, 1, 0));
-	glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
 	glEnable(GL_DEPTH_TEST);
+	glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
 	while (glfwWindowShouldClose(window) == false && glfwGetKey(window, GLFW_KEY_ESCAPE) != GLFW_PRESS)
 	{
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
 		model = glm::rotate(model, 0.016f / 3.0f, glm::vec3(0.707, 0.707, 0));
-		glm::vec3 light_source = glm::vec3(0, 0, 5);
+		glm::mat4 pvMatrix = camera_ptr->get_projection_vew_matrix();
 
-		glUseProgram(shader_program_ID);
-		auto uniform_location = glGetUniformLocation(shader_program_ID, "projection_view_matrix");
-		glUniformMatrix4fv(uniform_location, 1, false, glm::value_ptr(camera_ptr->get_projection_vew_matrix()));
-
-		uniform_location = glGetUniformLocation(shader_program_ID, "model_matrix");
-		glUniformMatrix4fv(uniform_location, 1, false, glm::value_ptr(model));
-
-		uniform_location = glGetUniformLocation(shader_program_ID, "color");
-		glUniform4fv(uniform_location, 1, glm::value_ptr(color));
-
-		uniform_location = glGetUniformLocation(shader_program_ID, "light_source");
-		glUniform3fv(uniform_location, 1, glm::value_ptr(light_source));
+		basicShader.SetUniformMatrix4fv("projection_view_matrix", pvMatrix);
+		basicShader.SetUniformMatrix4fv("model_matrix", model);
 
 		glBindVertexArray(VAO);
-		//glDrawArrays(GL_TRIANGLES, 0, num_verts);
 		glDrawElements(GL_TRIANGLES, index_buffer_size, GL_UNSIGNED_INT, 0);
 
 		glfwSwapBuffers(window);

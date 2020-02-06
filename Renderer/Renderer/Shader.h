@@ -1,27 +1,31 @@
 #pragma once
-#include <string>
 #include "ext.hpp";
 #include "glm.hpp";
+#include <string>
 
 class Shader
 {
 private:
-	unsigned int _shaderID;
+	unsigned int _shaderProgramID;
 	unsigned int _vertexID;
 	unsigned int _fragmentID;
 
 	char* _vertexSrc;
 	char* _fragmentSrc;
 
-	void CreateShader(char* vertexPath, char* fragmentPath);
-	void ParseShaderFile(char* path, char* srcBuffer) const;
+	std::string _stringBuffer;
+
+	void CreateShader(const char* vertexPath, const char* fragmentPath);
+	void CompileShader(unsigned int ID);
+	void LoadShaderFile(const char* path, char** srcBuffer);
 public:
-	Shader(char* vertexPath, char* fragmentPath);
+	Shader(const char* vertexPath, const char* fragmentPath);
+	Shader() = delete;
 	~Shader();
 
-	void SetUniformMatrix4fv(char* name, glm::mat4& value);
-	void SetUniform4fv(char* name, glm::vec4& value);
-	void SetUniform3fv(char* name, glm::vec3& value);
+	void SetUniformMatrix4fv(const char* name, glm::mat4& value);
+	void SetUniform4fv(const char* name, glm::vec4& value);
+	void SetUniform3fv(const char* name, glm::vec3& value);
 
 	void Bind();
 	void Unbind();
