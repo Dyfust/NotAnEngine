@@ -139,10 +139,19 @@ int main()
 	
 	glEnable(GL_DEPTH_TEST);
 	glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
+
+	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+
+	if (glfwRawMouseMotionSupported())
+		glfwSetInputMode(window, GLFW_RAW_MOUSE_MOTION, GLFW_TRUE);
+
 	while (glfwWindowShouldClose(window) == false && glfwGetKey(window, GLFW_KEY_ESCAPE) != GLFW_PRESS)
 	{
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		model = glm::rotate(model, 0.016f / 3.0f, glm::vec3(0.707, 0.707, 0));
+
+		camera_ptr->update(0.016f);
+
 		glm::mat4 pvMatrix = camera_ptr->get_projection_vew_matrix();
 
 		basicShader.SetUniformMatrix4fv("projection_view_matrix", pvMatrix);
