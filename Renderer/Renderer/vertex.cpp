@@ -11,3 +11,8 @@ Vertex::Vertex(glm::vec3 position)
 	this->position = position;
 	this->normal = glm::vec3(1, 0, 0);
 }
+
+Vertex::Vertex()
+{
+
+}
