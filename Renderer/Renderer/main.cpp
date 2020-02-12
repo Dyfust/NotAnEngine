@@ -34,11 +34,8 @@ int main()
 	// ---------------
 
 	camera* camera_ptr = new camera();
-	glm::mat4 model = glm::mat4(1.0f);
-	model = glm::rotate(model, 3.14f / 4, glm::vec3(0, 1, 0));
 	glm::vec4 color = glm::vec4(1.0f, 0.0f, 0.0f, 1.0f);
 	glm::vec3 lightSource = glm::vec3(0, 0, 5);
-
 
 	Mesh* cube = new Mesh({
 		// AWAY FACE
@@ -123,15 +120,18 @@ int main()
 	while (glfwWindowShouldClose(window) == false && glfwGetKey(window, GLFW_KEY_ESCAPE) != GLFW_PRESS)
 	{
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		model = glm::rotate(model, 0.016f / 3.0f, glm::vec3(0.707, 0.707, 0));
-
+		glm::mat4 model = glm::mat4(1.0f);
 		camera_ptr->update(0.016f);
 
 		glm::mat4 pvMatrix = camera_ptr->get_projection_vew_matrix();
 
 		basicShader.SetUniformMatrix4fv("projection_view_matrix", pvMatrix);
-		basicShader.SetUniformMatrix4fv("model_matrix", model);
 
+		basicShader.SetUniformMatrix4fv("model_matrix", model);
+		glDrawElements(GL_TRIANGLES, cube->GetIndicesCount(), GL_UNSIGNED_INT, 0);
+
+		model[3] = glm::vec4(5.0f, 5.0f, 5.0f, 1.0f);
+		basicShader.SetUniformMatrix4fv("model_matrix", model);
 		glDrawElements(GL_TRIANGLES, cube->GetIndicesCount(), GL_UNSIGNED_INT, 0);
 
 		glfwSwapBuffers(window);
