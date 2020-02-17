@@ -26,6 +26,7 @@ public:
 	void SetUniformMatrix4fv(const char* name, glm::mat4& value);
 	void SetUniform4fv(const char* name, glm::vec4& value);
 	void SetUniform3fv(const char* name, glm::vec3& value);
+	void SetUniform1f(const char* name, float& value);
 
 	void Bind();
 	void Unbind();

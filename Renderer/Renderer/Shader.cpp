@@ -103,6 +103,12 @@ void Shader::SetUniform3fv(const char* name, glm::vec3& value)
 	glUniform3fv(uniformLocation, 1, glm::value_ptr(value));
 }
 
+void Shader::SetUniform1f(const char* name, float& value)
+{
+	int uniformLocation = glGetUniformLocation(_shaderProgramID, name);
+	glUniform1f(uniformLocation, value);
+}
+
 void Shader::Bind()
 {
 	glUseProgram(_shaderProgramID);

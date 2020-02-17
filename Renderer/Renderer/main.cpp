@@ -6,6 +6,9 @@
 #include "vertex.h"
 #include "Shader.h"
 #include "Mesh.h"
+#define STB_IMAGE_IMPLEMENTATION
+#include "stb_image.h"
+#include "OBJMesh.h"
 
 using uint = unsigned int;
 int main()
@@ -35,7 +38,7 @@ int main()
 
 	camera* camera_ptr = new camera();
 	glm::vec4 color = glm::vec4(1.0f, 0.0f, 0.0f, 1.0f);
-	glm::vec3 lightSource = glm::vec3(0, 0, 5);
+	glm::vec3 lightSource = glm::vec3(10, 20, 5);
 
 	Mesh* cube = new Mesh({
 		// AWAY FACE
@@ -101,14 +104,30 @@ int main()
 		}
 		);
 
-	cube->Bind();
+	aie::OBJMesh bunny = aie::OBJMesh();
+	bunny.load("../Models/Bunny.obj");
+
+	aie::OBJMesh dragon = aie::OBJMesh();
+	dragon.load("../Models/Dragon.obj");
 
 	// Shader
 	Shader basicShader = Shader("..\\Shaders\\simple_vertex.glsl", "..\\Shaders\\simple_frag.glsl");
 	basicShader.Bind();
 	basicShader.SetUniform3fv("light_source", lightSource);
 	basicShader.SetUniform4fv("color", color);
-	
+	//// Texture
+	//int width, height, nrChannels;
+
+	//unsigned char* texture_data = stbi_load("texture.jpg", &width, &height, &nrChannels, 0);
+	//uint textureID;
+	//glGenTextures(1, &textureID);
+	//glBindTexture(GL_TEXTURE_2D, textureID);
+
+	//glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, texture_data);
+	//glGenerateMipmap(GL_TEXTURE_2D);
+
+	//stbi_image_free(texture_data);
+
 	glEnable(GL_DEPTH_TEST);
 	glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
 
@@ -117,25 +136,42 @@ int main()
 	if (glfwRawMouseMotionSupported())
 		glfwSetInputMode(window, GLFW_RAW_MOUSE_MOTION, GLFW_TRUE);
 
+	float time = 0.0f;
+
 	while (glfwWindowShouldClose(window) == false && glfwGetKey(window, GLFW_KEY_ESCAPE) != GLFW_PRESS)
 	{
+		float deltatime = 1.0f / 60.0f;
+
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glm::mat4 model = glm::mat4(1.0f);
 		camera_ptr->update(0.016f);
 
 		glm::mat4 pvMatrix = camera_ptr->get_projection_vew_matrix();
+		cube->Bind();
 
+
+		basicShader.SetUniform1f("time", time);
 		basicShader.SetUniformMatrix4fv("projection_view_matrix", pvMatrix);
 
-		basicShader.SetUniformMatrix4fv("model_matrix", model);
-		glDrawElements(GL_TRIANGLES, cube->GetIndicesCount(), GL_UNSIGNED_INT, 0);
+		//basicShader.SetUniformMatrix4fv("model_matrix", model);
+		//glDrawElements(GL_TRIANGLES, cube->GetIndicesCount(), GL_UNSIGNED_INT, 0);
 
-		model[3] = glm::vec4(5.0f, 5.0f, 5.0f, 1.0f);
+		//model[3] = glm::vec4(1.5f, 0.0f, 0.0f, 1.0f);
+		//basicShader.SetUniformMatrix4fv("model_matrix", model);
+		//glDrawElements(GL_TRIANGLES, cube->GetIndicesCount(), GL_UNSIGNED_INT, 0);
+
+		model[3] = glm::vec4(10.0f, 0.0f, 0.0f, 1.0f);
 		basicShader.SetUniformMatrix4fv("model_matrix", model);
-		glDrawElements(GL_TRIANGLES, cube->GetIndicesCount(), GL_UNSIGNED_INT, 0);
+		bunny.draw();
+
+		model[3] = glm::vec4(-10.0f, 0.0f, 0.0f, 1.0f);
+		basicShader.SetUniformMatrix4fv("model_matrix", model);
+		dragon.draw();
 
 		glfwSwapBuffers(window);
 		glfwPollEvents();
+
+		time += deltatime;
 	}
 
 	glfwDestroyWindow(window);
