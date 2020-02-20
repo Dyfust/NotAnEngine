@@ -36,7 +36,7 @@ int main()
 
 	// ---------------
 	camera* camera_ptr = new camera();
-	glm::vec4 color = glm::vec4(0.59f, 0.38f, 0.96f, 1.0f);
+	glm::vec4 color = glm::vec4(0.25, 0.25, 0.25, 1.0);
 	glm::vec3 lightSource = glm::vec3(10, 20, 5);
 
 	Mesh* cube = new Mesh({

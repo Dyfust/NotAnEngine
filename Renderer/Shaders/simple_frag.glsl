@@ -25,7 +25,7 @@ void main()
 	
 	float noise = noised(vec2(frag_pos));
 	
-	float bias = 1.5 * intensity;//2.25 * intensity;
+	float bias = 1.75 * intensity;//2.25 * intensity;
 	
 	float new_intensity = 0;
 	
@@ -34,14 +34,12 @@ void main()
 	else
 	new_intensity = 0;
 	
-	//new_intensity = noise;
+	if (intensity > 0.6)
+	new_intensity = 1;
 	
-	//if (intensity > 0.55)
-	//new_intensity = 1;
+	float toon_intensity = smoothstep(0.4, 0.4, intensity);
 	
-	float toon_intensity = smoothstep(0.3, 0.3, intensity);
+	vec4 new_color = mix(color, ambient, toon_intensity * new_intensity);
 	
-	vec4 new_color = mix(color, ambient, new_intensity);
-	
-	final_color = new_color;//(ambient * toon_intensity) * new_intensity); //(new_intensity);
+	final_color = new_color;
 }
