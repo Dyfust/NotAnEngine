@@ -1,38 +1,47 @@
 #version 450
 
 uniform vec4 color;
-uniform vec4 light_color = vec4(0.25, 0.25, 0.25, 1);
+uniform vec4 ambient = vec4(196.0 / 255.0, 176.0 / 255.0, 228.0 / 255.0, 1.0);
 uniform vec3 light_source;
 uniform float time;
+uniform sampler2D u_Texture;
 
 out vec4 final_color;
 
 in vec3 frag_pos;
 in vec3 normal;
+in vec2 uv;
+
+float noised(vec2 co)
+{
+  return fract(sin(dot(co.xy, vec2(12.9898,78.233))) * 43758.5453);
+}
 
 void main()
 {
-	vec4 ambient = light_color;
-
 	vec3 light_direction = normalize(light_source - frag_pos);
 	
-	vec4 diff_color;
 	float intensity = clamp(dot(normal, light_direction), 0.0, 1.0);
 	
-	if (intensity > 0.95)  
-		diff_color = vec4(0.9, 0.9, 0.9, 1.0);
-    //else if 
-		//(intensity > 0.75) diff_color = vec4(0.8, 0.8, 0.8, 1.0);
-    else if 
-		(intensity > 0.50) diff_color = vec4(0.6, 0.6, 0.6, 1.0);
-    //else if 
-		//(intensity > 0.25) diff_color = vec4(0.4, 0.4, 0.4, 1.0);
-    else                       
-		diff_color = vec4(0.2, 0.2, 0.2, 1.0);
+	float noise = noised(vec2(frag_pos));
 	
-	vec4 diff_final = diff_color;
+	float bias = 1.5 * intensity;//2.25 * intensity;
 	
+	float new_intensity = 0;
 	
-    final_color = ambient * color + diff_color;
-	//final_color = vec4(normal, 1.0) * color;
+	if (noise < bias)
+	new_intensity = 1;
+	else
+	new_intensity = 0;
+	
+	//new_intensity = noise;
+	
+	//if (intensity > 0.55)
+	//new_intensity = 1;
+	
+	float toon_intensity = smoothstep(0.3, 0.3, intensity);
+	
+	vec4 new_color = mix(color, ambient, new_intensity);
+	
+	final_color = new_color;//(ambient * toon_intensity) * new_intensity); //(new_intensity);
 }

@@ -109,6 +109,12 @@ void Shader::SetUniform1f(const char* name, float& value)
 	glUniform1f(uniformLocation, value);
 }
 
+void Shader::SetUniform1i(const char* name, int value)
+{
+	int uniformLocation = glGetUniformLocation(_shaderProgramID, name);
+	glUniform1i(uniformLocation, value);
+}
+
 void Shader::Bind()
 {
 	glUseProgram(_shaderProgramID);

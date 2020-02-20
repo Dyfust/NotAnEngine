@@ -27,6 +27,7 @@ public:
 	void SetUniform4fv(const char* name, glm::vec4& value);
 	void SetUniform3fv(const char* name, glm::vec3& value);
 	void SetUniform1f(const char* name, float& value);
+	void SetUniform1i(const char* name, int value);
 
 	void Bind();
 	void Unbind();

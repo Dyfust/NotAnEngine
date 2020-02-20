@@ -35,9 +35,8 @@ int main()
 	}
 
 	// ---------------
-
 	camera* camera_ptr = new camera();
-	glm::vec4 color = glm::vec4(1.0f, 0.0f, 0.0f, 1.0f);
+	glm::vec4 color = glm::vec4(0.59f, 0.38f, 0.96f, 1.0f);
 	glm::vec3 lightSource = glm::vec3(10, 20, 5);
 
 	Mesh* cube = new Mesh({
@@ -115,21 +114,39 @@ int main()
 	basicShader.Bind();
 	basicShader.SetUniform3fv("light_source", lightSource);
 	basicShader.SetUniform4fv("color", color);
-	//// Texture
-	//int width, height, nrChannels;
 
-	//unsigned char* texture_data = stbi_load("texture.jpg", &width, &height, &nrChannels, 0);
-	//uint textureID;
-	//glGenTextures(1, &textureID);
-	//glBindTexture(GL_TEXTURE_2D, textureID);
+	// Texture
+	int width, height, nrChannels;
 
-	//glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, texture_data);
-	//glGenerateMipmap(GL_TEXTURE_2D);
+	unsigned char* texture_data = stbi_load("..\\Textures\\Image.png", &width, &height, &nrChannels, 0);
+	uint textureID;
+	glGenTextures(1, &textureID);
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, textureID);
 
-	//stbi_image_free(texture_data);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+	if (texture_data) 
+	{
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, texture_data);
+		glGenerateMipmap(GL_TEXTURE_2D);
+	}
+	else 
+	{
+		printf("Failed to load texture");
+	}
+
+	stbi_image_free(texture_data);
+
+	basicShader.SetUniform1i("u_Texture", 0);
+	
+	// ---------------
 
 	glEnable(GL_DEPTH_TEST);
-	glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
+	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 
 	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
@@ -173,6 +190,8 @@ int main()
 
 		time += deltatime;
 	}
+
+	glDeleteTextures(1, &textureID);
 
 	glfwDestroyWindow(window);
 	glfwTerminate();
