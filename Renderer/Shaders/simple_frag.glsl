@@ -1,45 +1,41 @@
 #version 450
 
 uniform vec4 color;
-uniform vec4 ambient = vec4(196.0 / 255.0, 176.0 / 255.0, 228.0 / 255.0, 1.0);
 uniform vec3 light_source;
-uniform float time;
 uniform sampler2D u_Texture;
 
-out vec4 final_color;
+in VertexData 
+{
+	vec3 frag_pos;
+	vec3 normal;
+	vec2 uv;
+} i;
 
-in vec3 frag_pos;
-in vec3 normal;
-in vec2 uv;
+out vec4 out_color;
 
-float noised(vec2 co)
+// https://community.khronos.org/t/simple-fast-prngs/70836
+float noise(vec2 co)
 {
   return fract(sin(dot(co.xy, vec2(12.9898,78.233))) * 43758.5453);
 }
 
 void main()
 {
-	vec3 light_direction = normalize(light_source - frag_pos);
+	vec4 ambient = vec4(1.0, 1.0, 1.0, 1.0);
+	float graininess = 0;
+	float factor = 1.75;
+
+	vec3 light_direction = normalize(light_source - i.frag_pos);
 	
-	float intensity = clamp(dot(normal, light_direction), 0.0, 1.0);
+	float intensity = clamp(dot(i.normal, light_direction), 0.0, 1.0);
 	
-	float noise = noised(vec2(frag_pos));
+	// Hi, this is a random number. not sure what the range is, but it's a random number.
+	float noise = noise(vec2(i.frag_pos));
 	
-	float bias = 1.75 * intensity;//2.25 * intensity;
+	// Likelihood of this pixel being lit.
+	float bias = factor * intensity;
 	
-	float new_intensity = 0;
+	intensity = 1 - smoothstep(bias, bias + graininess, noise);
 	
-	if (noise < bias)
-	new_intensity = 1;
-	else
-	new_intensity = 0;
-	
-	if (intensity > 0.6)
-	new_intensity = 1;
-	
-	float toon_intensity = smoothstep(0.4, 0.4, intensity);
-	
-	vec4 new_color = mix(color, ambient, toon_intensity * new_intensity);
-	
-	final_color = new_color;
+	out_color = mix(color, ambient, intensity);;
 }

@@ -36,7 +36,7 @@ int main()
 
 	// ---------------
 	camera* camera_ptr = new camera();
-	glm::vec4 color = glm::vec4(0.25, 0.25, 0.25, 1.0);
+	glm::vec4 color = glm::vec4(196.0 / 255.0, 176.0 / 255.0, 228.0 / 255.0, 1.0);
 	glm::vec3 lightSource = glm::vec3(10, 20, 5);
 
 	Mesh* cube = new Mesh({
@@ -166,8 +166,6 @@ int main()
 		glm::mat4 pvMatrix = camera_ptr->get_projection_vew_matrix();
 		cube->Bind();
 
-
-		basicShader.SetUniform1f("time", time);
 		basicShader.SetUniformMatrix4fv("projection_view_matrix", pvMatrix);
 
 		//basicShader.SetUniformMatrix4fv("model_matrix", model);
