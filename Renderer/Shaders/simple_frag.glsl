@@ -21,7 +21,7 @@ float noise(vec2 co)
 
 void main()
 {
-	vec4 ambient = vec4(1.0, 1.0, 1.0, 1.0);
+	vec4 ambient = vec4(0.0, 0.4, 0.0, 1.0);
 	float graininess = 0;
 	float factor = 1.75;
 

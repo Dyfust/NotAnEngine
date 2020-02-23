@@ -11,6 +11,7 @@ Shader::Shader(const char* vertexPath, const char* fragmentPath)
 
 Shader::~Shader()
 {
+	Unbind();
 	glDeleteProgram(_shaderProgramID);
 	glDeleteShader(_vertexID);
 	glDeleteShader(_fragmentID);

@@ -13,9 +13,9 @@ private:
 	const float default_fov = 90.0f * 3.14159f / 180.0f;
 	const float default_aspect_ratio = 16.0f / 9.0f;
 	const float default_near = 0.01f;
-	const float default_far = 1000.0f;
+	const float default_far = 9999999999.0f;
 
-	float speed = 8;
+	float speed = 50;
 	float angular_speed = 0.1f;
 
 	void update_pv_transform();
