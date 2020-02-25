@@ -14,7 +14,7 @@ private:
 	unsigned char* _localBuffer;
 
 public:
-	Texture(std::string& path, unsigned int slot = 0);
+	Texture(const char* path, unsigned int slot = 0);
 	~Texture();
 
 	void Bind();

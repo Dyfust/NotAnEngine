@@ -38,19 +38,27 @@ int main()
 	// ---------------
 	camera* camera_ptr = new camera();
 	glm::vec4 color = glm::vec4(196.0 / 255.0, 176.0 / 255.0, 228.0 / 255.0, 1.0);
-	glm::vec3 lightSource = glm::vec3(50, 50, 50);
+	glm::vec3 lightSource = glm::vec3(300, 1000, 300);
 
-	aie::OBJMesh bunny = aie::OBJMesh();
-	bunny.load("../Models/Dragon.obj");
+	// Mesh
+	aie::OBJMesh house = aie::OBJMesh();
+	house.load("../Models/MayanHouse/SM_MayanHouse_01.obj");
 
-	aie::OBJMesh dragon = aie::OBJMesh();
-	dragon.load("../Models/Bunny.obj");
+	aie::OBJMesh sun = aie::OBJMesh();
+	sun.load("../Models/Bunny.obj");
 
 	// Shader
-	Shader basicShader = Shader("..\\Shaders\\simple_vertex.glsl", "..\\Shaders\\simple_frag.glsl");
+	Shader basicShader = Shader("..\\Shaders\\lit_vertex.glsl", "..\\Shaders\\lit_frag.glsl");
 	basicShader.Bind();
 	basicShader.SetUniform3fv("light_source", lightSource);
 	basicShader.SetUniform4fv("color", color);
+
+	// Texture
+	Texture house_atlas = Texture("../Textures/MayanHouseTextures/T_Atlas_Albedo.tga", 0);
+	Texture house_trim = Texture("../Textures/MayanHouseTextures/T_Trim_Albedo.tga", 1);
+
+	basicShader.SetUniform1i("u_AtlasTexture", 0);
+	basicShader.SetUniform1i("u_TrimTexture", 1);
 	
 	// ---------------
 
@@ -78,12 +86,16 @@ int main()
 
 		basicShader.SetUniformMatrix4fv("projection_view_matrix", pvMatrix);
 
+		house_atlas.Bind();
+		house_trim.Bind();
 		basicShader.SetUniformMatrix4fv("model_matrix", model);
-		dragon.draw();
+		house.draw();
 
-		model[3] = glm::vec4(50.0, 50.0, 50.0, 1.0);
-		basicShader.SetUniformMatrix4fv("model_matrix", model);
-		bunny.draw();
+		house_atlas.Unbind();
+		house_trim.Unbind();
+		//model[3] = glm::vec4(glm::vec3(300, 50, 300), 1.0f);
+		//basicShader.SetUniformMatrix4fv("model_matrix", model);
+		//sun.draw();
 
 		glfwSwapBuffers(window);
 		glfwPollEvents();

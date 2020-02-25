@@ -260,6 +260,14 @@ void OBJMesh::draw(bool usePatches /* = false */) {
 		else
 			glDrawElements(GL_TRIANGLES, c.indexCount, GL_UNSIGNED_INT, 0);
 	}
+
+	//// bind and draw geometry
+	//MeshChunk c = m_meshChunks[7];
+	//glBindVertexArray(c.vao);
+	//if (usePatches)
+	//	glDrawElements(GL_PATCHES, c.indexCount, GL_UNSIGNED_INT, 0);
+	//else
+	//	glDrawElements(GL_TRIANGLES, c.indexCount, GL_UNSIGNED_INT, 0);
 }
 
 void OBJMesh::calculateTangents(std::vector<Vertex>& vertices, const std::vector<unsigned int>& indices) {

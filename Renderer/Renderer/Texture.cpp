@@ -1,17 +1,17 @@
 #include "Texture.h"
 #include "stb_image.h"
 
-Texture::Texture(std::string& path, unsigned int slot)
+Texture::Texture(const char* path, unsigned int slot)
 {
-	_localBuffer = stbi_load(path.data(), &_width, &_height, &_nrChannels, 0);
+	_localBuffer = stbi_load(path, &_width, &_height, &_nrChannels, 0);
 	_slot = slot;
 
 	glActiveTexture(GL_TEXTURE0 + _slot);
 	glGenTextures(1, &_textureID);
 	glBindTexture(GL_TEXTURE_2D, _textureID);
 
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
