@@ -87,7 +87,7 @@ bool OBJMesh::load(const char* filename, bool loadTextures /* = true */, bool fl
 		chunk.indexCount = (unsigned int)s.mesh.indices.size();
 
 		// create vertex data
-		std::vector<Vertex> vertices;
+		std::vector<aie::OBJMesh::Vertex> vertices;
 		vertices.resize(s.mesh.positions.size() / 3);
 		size_t vertCount = vertices.size();
 

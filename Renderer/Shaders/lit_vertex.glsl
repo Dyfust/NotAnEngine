@@ -17,7 +17,7 @@ out VertexData
 void main()
 {
 	o.frag_pos = vec3(model_matrix * vec4(in_position, 1));
-	o.normal = vec3(model_matrix * vec4(in_normal, 0));
+	o.normal = mat3(transpose(inverse(model_matrix))) * in_normal;
 	o.uv = in_uv;
 	
 	gl_Position = (projection_view_matrix * model_matrix) * vec4(in_position, 1);

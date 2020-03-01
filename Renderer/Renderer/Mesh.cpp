@@ -3,7 +3,7 @@
 #include "glfw3.h"
 #include "glm.hpp"
 
-Mesh::Mesh(std::vector<Vertex> vertices, std::vector<int> indices)
+Mesh::Mesh(std::vector<Vertex>& vertices, std::vector<unsigned int>& indices)
 {
 	_vertices = vertices;
 	_indices = indices;
@@ -18,12 +18,14 @@ Mesh::Mesh(std::vector<Vertex> vertices, std::vector<int> indices)
 	glBufferData(GL_ARRAY_BUFFER, _vertices.size() * sizeof(Vertex), _vertices.data(), GL_STATIC_DRAW);
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IBO);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, _indices.size() * sizeof(int), _indices.data(), GL_STATIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, _indices.size() * sizeof(unsigned int), _indices.data(), GL_STATIC_DRAW);
 
 	glEnableVertexAttribArray(0);
 	glEnableVertexAttribArray(1);
+	glEnableVertexAttribArray(2);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), 0);
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid*)sizeof(glm::vec3));
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid*)(sizeof(glm::vec3) * 2));
 
 	Unbind();
 }
@@ -35,18 +37,21 @@ Mesh::~Mesh()
 	glDeleteBuffers(1, &IBO);
 }
 
+void Mesh::Draw()
+{
+	Bind();
+	glDrawElements(GL_TRIANGLES, GetIndicesCount(), GL_UNSIGNED_INT, 0);
+	Unbind();
+}
+
 void Mesh::Bind()
 {
 	glBindVertexArray(VAO);
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IBO);
 }
 
 void Mesh::Unbind()
 {
 	glBindVertexArray(0);
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
 
 const int& Mesh::GetVAO() const

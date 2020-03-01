@@ -6,17 +6,18 @@ class Mesh
 {
 private:
 	std::vector<Vertex> _vertices;
-	std::vector<int> _indices;
+	std::vector<unsigned int> _indices;
 
 	unsigned int VAO;
 	unsigned int VBO;
 	unsigned int IBO;
 
 public:
-	Mesh(std::vector<Vertex> vertices, std::vector<int> indices);
+	Mesh(std::vector<Vertex>& vertices, std::vector<unsigned int>& indices);
 	Mesh() = delete;
 	~Mesh();
 
+	void Draw();
 	void Bind();
 	void Unbind();
 

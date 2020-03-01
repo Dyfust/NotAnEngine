@@ -10,6 +10,8 @@
 #include "stb_image.h"
 #include "OBJMesh.h"
 #include "Texture.h"
+#include "MeshGroup.h"
+#include "Primitives.h"
 
 using uint = unsigned int;
 int main()
@@ -37,33 +39,30 @@ int main()
 
 	// ---------------
 	camera* camera_ptr = new camera();
-	glm::vec4 color = glm::vec4(196.0 / 255.0, 176.0 / 255.0, 228.0 / 255.0, 1.0);
-	glm::vec3 lightSource = glm::vec3(300, 1000, 300);
+	glm::vec3 lightSource = glm::vec3(20, 20, 50);
+	glm::vec3 light_color = glm::vec3(1.0, 1.0, 1.0);
+	glm::vec3 object_color = glm::vec3(75.0f / 255.0f, 92.0f / 255.0f, 245.0f / 255.0f);
 
 	// Mesh
-	aie::OBJMesh house = aie::OBJMesh();
-	house.load("../Models/MayanHouse/SM_MayanHouse_01.obj");
+	MeshGroup house;
+	house.Load("../Models/MayanHouse/SM_MayanHouse_01.obj");
 
-	aie::OBJMesh sun = aie::OBJMesh();
-	sun.load("../Models/Bunny.obj");
+	MeshGroup bunny;
+	bunny.Load("../Models/Dragon.obj");
+
+	Mesh* sphere = Primitives::GenerateSphere(5.0, 100, 100);
 
 	// Shader
 	Shader basicShader = Shader("..\\Shaders\\lit_vertex.glsl", "..\\Shaders\\lit_frag.glsl");
 	basicShader.Bind();
 	basicShader.SetUniform3fv("light_source", lightSource);
-	basicShader.SetUniform4fv("color", color);
-
-	// Texture
-	Texture house_atlas = Texture("../Textures/MayanHouseTextures/T_Atlas_Albedo.tga", 0);
-	Texture house_trim = Texture("../Textures/MayanHouseTextures/T_Trim_Albedo.tga", 1);
-
-	basicShader.SetUniform1i("u_AtlasTexture", 0);
-	basicShader.SetUniform1i("u_TrimTexture", 1);
+	basicShader.SetUniform3fv("light_color", light_color);
+	basicShader.SetUniform3fv("color", object_color);
 	
 	// ---------------
 
 	glEnable(GL_DEPTH_TEST);
-	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+	glClearColor(0.35f, 0.35f, 0.35f, 1.0f);
 
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
@@ -79,23 +78,21 @@ int main()
 		float deltatime = 1.0f / 60.0f;
 
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		glm::mat4 model = glm::mat4(1);
 		camera_ptr->update(0.016f);
 
+		glm::mat4 model = glm::mat4(1);
 		glm::mat4 pvMatrix = camera_ptr->get_projection_vew_matrix();
-
 		basicShader.SetUniformMatrix4fv("projection_view_matrix", pvMatrix);
-
-		house_atlas.Bind();
-		house_trim.Bind();
 		basicShader.SetUniformMatrix4fv("model_matrix", model);
-		house.draw();
 
-		house_atlas.Unbind();
-		house_trim.Unbind();
-		//model[3] = glm::vec4(glm::vec3(300, 50, 300), 1.0f);
-		//basicShader.SetUniformMatrix4fv("model_matrix", model);
-		//sun.draw();
+		glm::vec3 camera_pos = camera_ptr->get_position();
+		basicShader.SetUniform3fv("view_point", camera_pos);
+
+		bunny.Draw();
+
+		model[3] = glm::vec4(15.0, 0.0f, 0.0f, 1.0f);
+		basicShader.SetUniformMatrix4fv("model_matrix", model);
+		sphere->Draw();
 
 		glfwSwapBuffers(window);
 		glfwPollEvents();

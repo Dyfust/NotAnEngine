@@ -15,7 +15,7 @@ private:
 	const float default_near = 0.01f;
 	const float default_far = 9999999999.0f;
 
-	float speed = 100;
+	float speed = 20;
 	float angular_speed = 0.1f;
 
 	void update_pv_transform();
