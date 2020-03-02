@@ -18,8 +18,8 @@ public:
 	~Mesh();
 
 	void Draw();
-	void Bind();
-	void Unbind();
+	void Bind() const;
+	void Unbind() const;
 
 	const int& GetVAO() const;
 	const int& GetIndicesCount() const;

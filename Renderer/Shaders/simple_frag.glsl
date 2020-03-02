@@ -1,15 +1,18 @@
 #version 450
 
-uniform vec4 color;
+uniform vec3 color;
 uniform vec3 light_source;
-uniform sampler2D u_Texture;
+uniform vec3 light_color;
+uniform sampler2D normal_map;
 
 in VertexData 
 {
-	vec3 frag_pos;
-	vec3 normal;
-	vec2 uv;
+    vec3 frag_pos;
+    vec3 normal;
+	mat3 TBN;
+    vec2 uv;
 } i;
+
 
 out vec4 out_color;
 
@@ -21,13 +24,18 @@ float noise(vec2 co)
 
 void main()
 {
-	vec4 ambient = vec4(0.0, 0.4, 0.0, 1.0);
+    vec2 uv = vec2(i.uv.x, 1.0 - i.uv.y);
+	
+	vec3 normal = texture(normal_map, uv).rgb;
+	normal = i.TBN * normalize(normal * 2.0 - 1.0);
+
+	vec4 ambient = vec4(1.0, 1.0, 1.0, 1.0);
 	float graininess = 0;
 	float factor = 1.75;
 
 	vec3 light_direction = normalize(light_source - i.frag_pos);
 	
-	float intensity = clamp(dot(i.normal, light_direction), 0.0, 1.0);
+	float intensity = clamp(dot(normal, light_direction), 0.0, 1.0);
 	
 	// Hi, this is a random number. not sure what the range is, but it's a random number.
 	float noise = noise(vec2(i.frag_pos));
@@ -35,7 +43,7 @@ void main()
 	// Likelihood of this pixel being lit.
 	float bias = factor * intensity;
 	
-	intensity = 1 - smoothstep(bias, bias + graininess, noise);
+	intensity = 1.0 - smoothstep(bias, bias + graininess, noise);
 	
-	out_color = mix(color, ambient, intensity);;
+	out_color = vec4(mix(color, light_color, intensity), 1.0);
 }

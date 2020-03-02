@@ -17,7 +17,7 @@ Texture::Texture(const char* path, unsigned int slot)
 
 	if (_localBuffer)
 	{
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, _width, _height, 0, GL_RGBA, GL_UNSIGNED_BYTE, _localBuffer);
+		glTexImage2D(GL_TEXTURE_2D, 0, _nrChannels == 4 ? GL_RGBA8 : GL_RGB, _width, _height, 0, _nrChannels == 4 ? GL_RGBA : GL_RGB, GL_UNSIGNED_BYTE, _localBuffer);
 		glGenerateMipmap(GL_TEXTURE_2D);
 	}
 	else
