@@ -5,6 +5,7 @@
 #include <vec4.hpp>
 #include <string>
 #include <vector>
+#include "Material.h"
 //#include "Texture.h"
 
 namespace aie {

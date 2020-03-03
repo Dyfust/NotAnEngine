@@ -56,6 +56,8 @@ void Shader::CreateShader(const char* vertexPath, const char* fragmentPath)
 		printf(output);
 		delete[] output;
 	}
+
+	LoadUniforms();
 }
 
 void Shader::CompileShader(unsigned int shaderID)
@@ -84,6 +86,22 @@ void Shader::LoadShaderFile(const char* path, char** srcBuffer)
 	}
 
 	*srcBuffer = (char*)_stringBuffer.c_str();
+}
+
+void Shader::LoadUniforms()
+{
+	int count;
+	glGetProgramiv(_shaderProgramID, GL_ACTIVE_UNIFORMS, &count);
+
+	_uniforms = new UniformData[count];
+
+	int tmpSize;
+	int tmpLength;
+
+	for (size_t i = 0; i < count; i++)
+	{	
+		glGetActiveUniform(_shaderProgramID, i, _uniforms[i]._nameBufferSize, &tmpLength, &tmpSize, &_uniforms[i]._type, _uniforms[i]._name);
+	}
 }
 
 void Shader::SetUniformMatrix4fv(const char* name, glm::mat4& value)

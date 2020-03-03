@@ -3,6 +3,28 @@
 #include "glm.hpp";
 #include <string>
 
+class UniformData
+{
+private:
+	char* _name;
+	unsigned int _type;
+	void* value;
+
+	int _nameBufferSize = 16;
+
+	friend class Shader;
+
+	UniformData()
+	{
+		_name = new char[_nameBufferSize];
+	}
+
+	~UniformData()
+	{
+		delete[] _name;
+	}
+};
+
 class Shader
 {
 private:
@@ -13,11 +35,13 @@ private:
 	char* _vertexSrc;
 	char* _fragmentSrc;
 
+	UniformData* _uniforms;
 	std::string _stringBuffer;
 
 	void CreateShader(const char* vertexPath, const char* fragmentPath);
 	void CompileShader(unsigned int ID);
 	void LoadShaderFile(const char* path, char** srcBuffer);
+	void LoadUniforms();
 public:
 	Shader(const char* vertexPath, const char* fragmentPath);
 	Shader() = delete;
@@ -32,4 +56,3 @@ public:
 	void Bind();
 	void Unbind();
 };
-
