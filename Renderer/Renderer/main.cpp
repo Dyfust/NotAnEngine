@@ -67,6 +67,8 @@ int main()
 	basicShader.SetUniform3fv("light_color", dirLight.color);
 	basicShader.SetUniform3fv("color", object_color);
 
+	Material* material = new Material(basicShader);
+
 	// Textures
 	Texture swordTex = Texture("..\\Textures\\SwordAndShield\\Sword_Albedo.png", 0);
 	Texture swordNormal = Texture("..\\Textures\\SwordAndShield\\Sword_Normal.png", 1);

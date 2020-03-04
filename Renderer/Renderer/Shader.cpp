@@ -93,14 +93,27 @@ void Shader::LoadUniforms()
 	int count;
 	glGetProgramiv(_shaderProgramID, GL_ACTIVE_UNIFORMS, &count);
 
-	_uniforms = new UniformData[count];
-
+	char tmpName[Uniform::nameBufferSize];
 	int tmpSize;
 	int tmpLength;
+	GLenum tmpType;
+
+	Uniform tmpUniform;
 
 	for (size_t i = 0; i < count; i++)
 	{	
-		glGetActiveUniform(_shaderProgramID, i, _uniforms[i]._nameBufferSize, &tmpLength, &tmpSize, &_uniforms[i]._type, _uniforms[i]._name);
+		glGetActiveUniform(_shaderProgramID, i, Uniform::nameBufferSize, &tmpLength, &tmpSize, &tmpType, tmpName);
+		strcpy_s(tmpUniform._name, tmpName);
+		tmpUniform._type = tmpType;
+		_uniforms.push_back(tmpUniform);
+	}
+
+	for (auto u : _uniforms)
+	{
+		char buffer[32]{ 0 };
+		sprintf_s(buffer, "%X", u._type);
+		std::string name = u._name;
+		std::cout << name << ", " << buffer << std::endl;
 	}
 }
 
@@ -142,4 +155,9 @@ void Shader::Bind()
 void Shader::Unbind()
 {
 	glUseProgram(0);
+}
+
+const std::vector<Uniform>& Shader::GetUniforms()
+{
+	return _uniforms;
 }

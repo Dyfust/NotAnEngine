@@ -1,6 +1,7 @@
+#include "Shader.h"
 #include "glm.hpp"
 #include "gl_core_4_5.h"
-#include "Shader.h"
+#include <vector>
 #pragma once
 
 class Material
@@ -11,4 +12,5 @@ public:
 
 private:
 	Shader* _shader;
+	std::vector<Uniform> _uniforms;
 };

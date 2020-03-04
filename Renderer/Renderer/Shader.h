@@ -1,29 +1,9 @@
 #pragma once
-#include "ext.hpp";
-#include "glm.hpp";
+#include "Uniform.h"
+#include "ext.hpp"
+#include "glm.hpp"
 #include <string>
-
-class UniformData
-{
-private:
-	char* _name;
-	unsigned int _type;
-	void* value;
-
-	int _nameBufferSize = 16;
-
-	friend class Shader;
-
-	UniformData()
-	{
-		_name = new char[_nameBufferSize];
-	}
-
-	~UniformData()
-	{
-		delete[] _name;
-	}
-};
+#include <vector>
 
 class Shader
 {
@@ -35,7 +15,7 @@ private:
 	char* _vertexSrc;
 	char* _fragmentSrc;
 
-	UniformData* _uniforms;
+	std::vector<Uniform> _uniforms;
 	std::string _stringBuffer;
 
 	void CreateShader(const char* vertexPath, const char* fragmentPath);
@@ -55,4 +35,6 @@ public:
 
 	void Bind();
 	void Unbind();
+
+	const std::vector<Uniform>& GetUniforms();
 };
