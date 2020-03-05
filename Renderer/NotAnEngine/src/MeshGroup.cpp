@@ -1,10 +1,12 @@
 #include "MeshGroup.h"
+#define TINYOBJLOADER_IMPLEMENTATION
 #include "tiny_obj_loader.h"
 #include <vector>
 #include <string>
 #include <array>
 #include "glm.hpp"
 #include "gl_core_4_5.h"
+
 
 void MeshGroup::Load(const char* path)
 {

@@ -116,17 +116,17 @@ void Shader::LoadUniforms()
 		std::cout << name << ", " << buffer << std::endl;
 	}
 
-	int indicesCount = -1;
-	glGetActiveUniformBlockiv(_shaderProgramID, 0, GL_UNIFORM_BLOCK_ACTIVE_UNIFORMS, &indicesCount);
+	//int indicesCount = -1;
+	//glGetActiveUniformBlockiv(_shaderProgramID, 0, GL_UNIFORM_BLOCK_ACTIVE_UNIFORMS, &indicesCount);
 
-	int* indices = new int[indicesCount];
-	glGetActiveUniformBlockiv(_shaderProgramID, 0, GL_UNIFORM_BLOCK_ACTIVE_UNIFORM_INDICES,
-		indices);
+	//int* indices = new int[indicesCount];
+	//glGetActiveUniformBlockiv(_shaderProgramID, 0, GL_UNIFORM_BLOCK_ACTIVE_UNIFORM_INDICES,
+	//	indices);
 
-	for (size_t i = 0; i < indicesCount; i++)
-	{
-		std::cout << indices[i] << ", ";
-	}
+	//for (size_t i = 0; i < indicesCount; i++)
+	//{
+	//	std::cout << indices[i] << ", ";
+	//}
 
 	std::cout << std::endl;
 }

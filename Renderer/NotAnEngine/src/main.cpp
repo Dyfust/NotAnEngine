@@ -8,15 +8,15 @@
 #include "Mesh.h"
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
-#include "OBJMesh.h"
 #include "Texture.h"
 #include "MeshGroup.h"
 #include "Primitives.h"
 #include "Lights.h"
+#include "Material.h"
 
 using uint = unsigned int;
 void Draw(const Mesh& mesh, Texture& albedo, Texture& normal);
-void Draw(const MeshGroup&, Texture& texture);
+void Draw(const MeshGroup&, Texture& albedo, Texture& normal);
 
 int main()
 {
@@ -50,18 +50,18 @@ int main()
 
 	// Mesh
 	MeshGroup house;
-	house.Load("../Models/MayanHouse/SM_MayanHouse_01.obj");
+	house.Load("Models/MayanHouse/SM_MayanHouse_01.obj");
 
 	MeshGroup bunny;
-	bunny.Load("../Models/Dragon.obj");
+	bunny.Load("Models/Dragon.obj");
 
 	MeshGroup weapon;
-	weapon.Load("../Models/SwordAndShield/meshSwordShield.obj");
+	weapon.Load("Models/SwordAndShield/meshSwordShield.obj");
 
 	Mesh* sphere = Primitives::GenerateSphere(5.0, 100, 100);
 
 	// Shader
-	Shader basicShader = Shader("..\\Shaders\\lit_vertex.glsl", "..\\Shaders\\lit_frag.glsl");
+	Shader basicShader = Shader("Shaders\\lit_vertex.glsl", "Shaders\\lit_frag.glsl");
 	basicShader.Bind();
 	basicShader.SetUniform3fv("light_source", dirLight.position);
 	basicShader.SetUniform3fv("light_color", dirLight.color);
@@ -70,11 +70,11 @@ int main()
 	Material* material = new Material(basicShader);
 
 	// Textures
-	Texture swordTex = Texture("..\\Textures\\SwordAndShield\\Sword_Albedo.png", 0);
-	Texture swordNormal = Texture("..\\Textures\\SwordAndShield\\Sword_Normal.png", 1);
+	Texture swordTex = Texture("Textures\\SwordAndShield\\Sword_Albedo.png", 0);
+	Texture swordNormal = Texture("Textures\\SwordAndShield\\Sword_Normal.png", 1);
 
-	Texture shieldTex = Texture("..\\Textures\\SwordAndShield\\Shield_Albedo.png", 2);
-	Texture shieldNormal = Texture("..\\Textures\\SwordAndShield\\Shield_Normal.png", 3);
+	Texture shieldTex = Texture("Textures\\SwordAndShield\\Shield_Albedo.png", 2);
+	Texture shieldNormal = Texture("Textures\\SwordAndShield\\Shield_Normal.png", 3);
 	
 	// ---------------
 
