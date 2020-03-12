@@ -52,7 +52,7 @@ int main()
 	MeshGroup weapon;
 	weapon.Load("Models\\SwordAndShield\\meshSwordShield.obj");
 
-	UniformBuffer stuff = UniformBuffer(5, sizeof(glm::mat4) + sizeof(glm::vec3), GL_DYNAMIC_DRAW);
+	UniformBuffer* stuff = new UniformBuffer(5, sizeof(glm::mat4) + sizeof(glm::vec3), GL_DYNAMIC_DRAW);
 
 	// Shader
 	Shader phongShader = Shader("Shaders\\lit_vertex.glsl", "Shaders\\lit_frag.glsl");
@@ -96,8 +96,8 @@ int main()
 
 		glm::vec3 camera_pos = camera_ptr->get_position();
 		glm::mat4 pvMatrix = camera_ptr->get_projection_vew_matrix();
-		stuff.UpdateBuffer(0, sizeof(glm::mat4), glm::value_ptr(pvMatrix));
-		stuff.UpdateBuffer(sizeof(glm::mat4), sizeof(glm::vec3), glm::value_ptr(camera_pos));
+		stuff->UpdateBuffer(0, sizeof(glm::mat4), glm::value_ptr(pvMatrix));
+		stuff->UpdateBuffer(sizeof(glm::mat4), sizeof(glm::vec3), glm::value_ptr(camera_pos));
 		phongShader.SetUniformMatrix4fv("projection_view_matrix", pvMatrix);
 
 		glm::mat4 model = glm::mat4(1);
@@ -113,7 +113,6 @@ int main()
 		phongShader.SetUniform1i("albedo_map", 0);
 		phongShader.SetUniform1i("normal_map", 1);
 		Draw(weapon.GetMeshes().at(1), swordTex, swordNormal);
-
 		
 
 		glfwSwapBuffers(window);
@@ -127,6 +126,8 @@ int main()
 
 	delete camera_ptr;
 	delete sphere;
+	delete material;
+	delete stuff;
 	return 0;
 }
 
