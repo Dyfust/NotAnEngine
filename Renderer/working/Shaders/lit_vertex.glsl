@@ -5,7 +5,12 @@ layout(location = 1) in vec3 in_normal;
 layout(location = 2) in vec4 in_tangent;
 layout(location = 3) in vec2 in_uv;
 
-uniform mat4 projection_view_matrix;
+layout(std140) uniform Engine 
+{
+	mat4 projection_view_matrix;
+	vec3 view_point;
+};
+
 uniform mat4 model_matrix; 
 
 out VertexData 

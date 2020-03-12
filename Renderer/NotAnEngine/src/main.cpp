@@ -1,18 +1,16 @@
-#include "glm.hpp"
-#include "gl_core_4_5.h"
-#include "glfw3.h"
-#include "ext.hpp"
+#include "Renderer.h"
 #include "camera.h"
 #include "vertex.h"
 #include "Shader.h"
 #include "Mesh.h"
-#define STB_IMAGE_IMPLEMENTATION
-#include "stb_image.h"
 #include "Texture.h"
 #include "MeshGroup.h"
 #include "Primitives.h"
 #include "Lights.h"
 #include "Material.h"
+#include "UniformBuffer.h"
+#include <string>
+#include <iostream>
 
 using uint = unsigned int;
 void Draw(const Mesh& mesh, Texture& albedo, Texture& normal);
@@ -45,29 +43,26 @@ int main()
 
 	// ---------------
 	camera* camera_ptr = new camera();
-	DirectionalLight dirLight = DirectionalLight(glm::vec3(25, 10, -20), glm::vec3(1.0, 1.0, 1.0));
-	glm::vec3 object_color = glm::vec3(0.0, 1.0, 0.0);
+	DirectionalLight dirLight = DirectionalLight(glm::vec3(25, 10, 20), glm::vec3(1.0, 1.0, 1.0));
+	glm::vec3 object_color = glm::vec3(1.0, 0.5, 1.0);
 
-	// Mesh
-	MeshGroup house;
-	house.Load("Models/MayanHouse/SM_MayanHouse_01.obj");
-
-	MeshGroup bunny;
-	bunny.Load("Models/Dragon.obj");
-
-	MeshGroup weapon;
-	weapon.Load("Models/SwordAndShield/meshSwordShield.obj");
-
+	// Meshes
 	Mesh* sphere = Primitives::GenerateSphere(5.0, 100, 100);
 
-	// Shader
-	Shader basicShader = Shader("Shaders\\lit_vertex.glsl", "Shaders\\lit_frag.glsl");
-	basicShader.Bind();
-	basicShader.SetUniform3fv("light_source", dirLight.position);
-	basicShader.SetUniform3fv("light_color", dirLight.color);
-	basicShader.SetUniform3fv("color", object_color);
+	MeshGroup weapon;
+	weapon.Load("Models\\SwordAndShield\\meshSwordShield.obj");
 
-	Material* material = new Material(basicShader);
+	// Shader
+	Shader phongShader = Shader("Shaders\\lit_vertex.glsl", "Shaders\\lit_frag.glsl");
+	phongShader.Bind();
+	phongShader.SetUniform3fv("directonal_light.source", dirLight.position);
+	phongShader.SetUniform3fv("directional_light.color", dirLight.color);
+	phongShader.SetUniform3fv("color", object_color);
+
+	UniformBuffer stuff = UniformBuffer(sizeof(glm::mat4) + sizeof(glm::vec3), 5, GL_DYNAMIC_DRAW);
+	phongShader.BindUniformBlock("Engine", 5);
+
+	Material* material = new Material(phongShader);
 
 	// Textures
 	Texture swordTex = Texture("Textures\\SwordAndShield\\Sword_Albedo.png", 0);
@@ -99,22 +94,24 @@ int main()
 
 		glm::vec3 camera_pos = camera_ptr->get_position();
 		glm::mat4 pvMatrix = camera_ptr->get_projection_vew_matrix();
-		basicShader.SetUniform3fv("view_point", camera_pos);
-		basicShader.SetUniformMatrix4fv("projection_view_matrix", pvMatrix);
+		stuff.UpdateBuffer(0, sizeof(glm::mat4), glm::value_ptr(pvMatrix));
+		stuff.UpdateBuffer(sizeof(glm::mat4), sizeof(glm::vec3), glm::value_ptr(camera_pos));
 
 		glm::mat4 model = glm::mat4(1);
 		model[3] = glm::vec4(0.0, 0.0, 0.0, 1.0);
-
 		model = glm::rotate(model, 3.1415f / 2.0f, glm::vec3(0.0, 1.0, 0.0));
-		basicShader.SetUniformMatrix4fv("model_matrix", model);
 
-		basicShader.SetUniform1i("albedo_map", 2);
-		basicShader.SetUniform1i("normal_map", 3);
+		phongShader.SetUniformMatrix4fv("model_matrix", model);
+
+		phongShader.SetUniform1i("albedo_map", 2);
+		phongShader.SetUniform1i("normal_map", 3);
 		Draw(weapon.GetMeshes().at(0), shieldTex, shieldNormal);
 
-		basicShader.SetUniform1i("albedo_map", 0);
-		basicShader.SetUniform1i("normal_map", 1);
+		phongShader.SetUniform1i("albedo_map", 0);
+		phongShader.SetUniform1i("normal_map", 1);
 		Draw(weapon.GetMeshes().at(1), swordTex, swordNormal);
+
+		
 
 		glfwSwapBuffers(window);
 		glfwPollEvents();

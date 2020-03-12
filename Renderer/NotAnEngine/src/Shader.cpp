@@ -161,6 +161,12 @@ void Shader::SetUniform1i(const char* name, int value)
 	glUniform1i(uniformLocation, value);
 }
 
+void Shader::BindUniformBlock(const char* blockName, unsigned int bindingPoint)
+{
+	unsigned int index = glGetUniformBlockIndex(_shaderProgramID, blockName);
+	glUniformBlockBinding(_shaderProgramID, index, bindingPoint);
+}
+
 void Shader::Bind()
 {
 	glUseProgram(_shaderProgramID);

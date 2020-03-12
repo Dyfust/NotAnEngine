@@ -33,6 +33,8 @@ public:
 	void SetUniform1f(const char* name, float& value);
 	void SetUniform1i(const char* name, int value);
 
+	void BindUniformBlock(const char* blockName, unsigned int bindingPoint);
+
 	void Bind();
 	void Unbind();
 
