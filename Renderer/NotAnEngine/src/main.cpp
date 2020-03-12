@@ -52,15 +52,17 @@ int main()
 	MeshGroup weapon;
 	weapon.Load("Models\\SwordAndShield\\meshSwordShield.obj");
 
+	UniformBuffer stuff = UniformBuffer(5, sizeof(glm::mat4) + sizeof(glm::vec3), GL_DYNAMIC_DRAW);
+
 	// Shader
 	Shader phongShader = Shader("Shaders\\lit_vertex.glsl", "Shaders\\lit_frag.glsl");
 	phongShader.Bind();
+
+	phongShader.BindUniformBlock("Engine", 5);
+
 	phongShader.SetUniform3fv("directonal_light.source", dirLight.position);
 	phongShader.SetUniform3fv("directional_light.color", dirLight.color);
 	phongShader.SetUniform3fv("color", object_color);
-
-	UniformBuffer stuff = UniformBuffer(sizeof(glm::mat4) + sizeof(glm::vec3), 5, GL_DYNAMIC_DRAW);
-	phongShader.BindUniformBlock("Engine", 5);
 
 	Material* material = new Material(phongShader);
 
@@ -96,6 +98,7 @@ int main()
 		glm::mat4 pvMatrix = camera_ptr->get_projection_vew_matrix();
 		stuff.UpdateBuffer(0, sizeof(glm::mat4), glm::value_ptr(pvMatrix));
 		stuff.UpdateBuffer(sizeof(glm::mat4), sizeof(glm::vec3), glm::value_ptr(camera_pos));
+		phongShader.SetUniformMatrix4fv("projection_view_matrix", pvMatrix);
 
 		glm::mat4 model = glm::mat4(1);
 		model[3] = glm::vec4(0.0, 0.0, 0.0, 1.0);

@@ -9,7 +9,7 @@ private:
 	unsigned int _size;
 
 public:
-	UniformBuffer(unsigned int size, unsigned int bindingPoint, GLenum usage);
+	UniformBuffer(unsigned int bindingPoint, unsigned int size, GLenum usage);
 	~UniformBuffer();
 
 	void UpdateBuffer(unsigned int offset, unsigned int size, const void* data);

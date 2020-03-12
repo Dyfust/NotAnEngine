@@ -1,17 +1,17 @@
 #version 450
 
 // Phong lighting.
+layout(std140) uniform Engine
+{
+    mat4 projection_view_matrix;
+    vec3 view_point;
+};
+
 // Struct definitions.
 struct DirectionalLight 
 {
 	vec3 source;
 	vec3 color;
-};
-
-layout(std140) uniform Engine
-{
-	mat4 projection_view_matrix;
-	vec3 view_point;
 };
 
 // Engine defined global uniforms.
