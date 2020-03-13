@@ -5,10 +5,17 @@ layout(location = 1) in vec3 in_normal;
 layout(location = 2) in vec4 in_tangent;
 layout(location = 3) in vec2 in_uv;
 
+struct DirectionalLight 
+{
+	vec4 source;
+	vec4 color;
+};
+
 layout(std140) uniform Engine 
 {
 	mat4 projection_view_matrix;
-	vec3 view_point;
+	vec4 camera_position;
+	DirectionalLight directional_light[2];
 };
 
 uniform mat4 model_matrix; 

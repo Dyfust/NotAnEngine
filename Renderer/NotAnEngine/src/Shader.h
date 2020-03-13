@@ -21,7 +21,7 @@ private:
 	void CreateShader(const char* vertexPath, const char* fragmentPath);
 	void CompileShader(unsigned int ID);
 	void LoadShaderFile(const char* path, char** srcBuffer);
-	void LoadUniforms();
+	void CacheUniforms();
 public:
 	Shader(const char* vertexPath, const char* fragmentPath);
 	Shader() = delete;

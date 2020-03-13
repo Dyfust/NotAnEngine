@@ -2,12 +2,13 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
 
-Texture::Texture(const char* path, unsigned int slot)
+Texture::Texture(const char* path)
 {
+	// Parse texture file.
 	_localBuffer = stbi_load(path, &_width, &_height, &_nrChannels, 0);
-	_slot = slot;
 
-	glActiveTexture(GL_TEXTURE0 + _slot);
+	// Create a texture buffer and set up the parameters.
+	glActiveTexture(GL_TEXTURE0);
 	glGenTextures(1, &_textureID);
 	glBindTexture(GL_TEXTURE_2D, _textureID);
 
@@ -35,9 +36,9 @@ Texture::~Texture()
 	glDeleteTextures(1, &_textureID);
 }
 
-void Texture::Bind()
+void Texture::Bind(unsigned int slot)
 {
-	glActiveTexture(GL_TEXTURE0 + _slot);
+	glActiveTexture(GL_TEXTURE0 + slot);
 	glBindTexture(GL_TEXTURE_2D, _textureID);
 }
 

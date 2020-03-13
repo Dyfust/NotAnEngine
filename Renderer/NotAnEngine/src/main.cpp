@@ -10,16 +10,16 @@
 #include "Material.h"
 #include "UniformBuffer.h"
 #include <string>
-#include <iostream>
 
 using uint = unsigned int;
-void Draw(const Mesh& mesh, Texture& albedo, Texture& normal);
-void Draw(const MeshGroup&, Texture& albedo, Texture& normal);
+void Draw(const Mesh& mesh, Material& material, glm::mat4 modelMatrix);
+void Draw(const MeshGroup&, Material& material, glm::mat4 modelMatrix);
 
 int main()
 {
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 
+	// OpenGL setup stuff.
 	if (!glfwInit())
 		return -1;
 
@@ -40,114 +40,117 @@ int main()
 
 		return -3;
 	}
-
 	// ---------------
-	camera* camera_ptr = new camera();
-	DirectionalLight dirLight = DirectionalLight(glm::vec3(25, 10, 20), glm::vec3(1.0, 1.0, 1.0));
-	glm::vec3 object_color = glm::vec3(1.0, 0.5, 1.0);
+	Camera* cameraPtr = new Camera();
+	DirectionalLight dirLight1 = DirectionalLight(glm::vec3(20, 0, -10), glm::vec3(0.35f, 0.25f, 0.65f));
+	DirectionalLight dirLight2 = DirectionalLight(glm::vec3(-20, 0, -10), glm::vec3(0.5f, 0.0f, 0.0f));
 
-	// Meshes
+	// Meshes.
 	Mesh* sphere = Primitives::GenerateSphere(5.0, 100, 100);
-
 	MeshGroup weapon;
 	weapon.Load("Models\\SwordAndShield\\meshSwordShield.obj");
 
-	UniformBuffer* stuff = new UniformBuffer(5, sizeof(glm::mat4) + sizeof(glm::vec3), GL_DYNAMIC_DRAW);
+	// Uniform buffers.
+	// Uniform buffer to hold uniforms assigned by the renderer.
+	// Project View Matrix (mat4), Object Color (vec4), Directional Light (2 * vec4)
+	UniformBuffer* uniformBuffer = new UniformBuffer(5, sizeof(glm::mat4) + 5 * sizeof(glm::vec4), GL_DYNAMIC_DRAW);
 
-	// Shader
+	// Shader.
 	Shader phongShader = Shader("Shaders\\lit_vertex.glsl", "Shaders\\lit_frag.glsl");
-	phongShader.Bind();
-
 	phongShader.BindUniformBlock("Engine", 5);
 
-	phongShader.SetUniform3fv("directonal_light.source", dirLight.position);
-	phongShader.SetUniform3fv("directional_light.color", dirLight.color);
-	phongShader.SetUniform3fv("color", object_color);
+	// Textures.
+	Texture swordAlbedoTexture = Texture("Textures\\SwordAndShield\\Sword_Albedo.png");
+	Texture swordNormalTexture = Texture("Textures\\SwordAndShield\\Sword_Normal.png");
 
-	Material* material = new Material(phongShader);
+	Texture shieldAlbedoTexture = Texture("Textures\\SwordAndShield\\Shield_Albedo.png");
+	Texture shieldNormalTexture = Texture("Textures\\SwordAndShield\\Shield_Normal.png");
 
-	// Textures
-	Texture swordTex = Texture("Textures\\SwordAndShield\\Sword_Albedo.png", 0);
-	Texture swordNormal = Texture("Textures\\SwordAndShield\\Sword_Normal.png", 1);
+	// Materials.
+	float swordShininess = 0.25f;
+	float swordSpecularReflectance = 0.25f;
+	glm::vec4 swordColor(0.25f, 0.25f, 0.35f, 1.0f);
+	Material swordMaterial = Material(phongShader);
+	swordMaterial.AddTexture("albedo_map", &swordAlbedoTexture);
+	swordMaterial.AddTexture("normal_map", &swordNormalTexture);
+	swordMaterial.SetValue("object_color", GL_FLOAT_VEC4, (void*)&swordColor);
+	swordMaterial.SetValue("shininess", GL_FLOAT, (void*)&swordShininess);
+	swordMaterial.SetValue("specular_reflectance", GL_FLOAT, (void*)&swordSpecularReflectance);
 
-	Texture shieldTex = Texture("Textures\\SwordAndShield\\Shield_Albedo.png", 2);
-	Texture shieldNormal = Texture("Textures\\SwordAndShield\\Shield_Normal.png", 3);
-	
+	float shieldShininess = 1.0f;
+	float shieldSpecularReflectance = 0.75f;
+	glm::vec4 shieldColor = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
+	Material shieldMaterial = Material(phongShader);
+	shieldMaterial.AddTexture("albedo_map", &shieldAlbedoTexture);
+	shieldMaterial.AddTexture("normal_map", &shieldNormalTexture);
+	shieldMaterial.SetValue("object_color", GL_FLOAT_VEC4, (void*)&shieldColor);
+	swordMaterial.SetValue("shininess", GL_FLOAT, (void*)&shieldShininess);
+	swordMaterial.SetValue("specular_reflectance", GL_FLOAT, (void*)& shieldSpecularReflectance);
 	// ---------------
 
 	glEnable(GL_DEPTH_TEST);
 	glClearColor(0.35f, 0.35f, 0.35f, 1.0f);
-
-	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
 	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
 	if (glfwRawMouseMotionSupported())
 		glfwSetInputMode(window, GLFW_RAW_MOUSE_MOTION, GLFW_TRUE);
 
-	float time = 0.0f;
-
 	while (glfwWindowShouldClose(window) == false && glfwGetKey(window, GLFW_KEY_ESCAPE) != GLFW_PRESS)
 	{
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		float deltatime = 1.0f / 60.0f;
+		cameraPtr->Update(deltatime);
 
-		camera_ptr->update(0.016f);
+		glm::vec3 tmp = cameraPtr->GetPosition();
+		glm::vec4 camera_pos = glm::vec4(tmp, 1.0f);
+		glm::mat4 pvMatrix = cameraPtr->GetProjectionViewMatrix();
 
-		glm::vec3 camera_pos = camera_ptr->get_position();
-		glm::mat4 pvMatrix = camera_ptr->get_projection_vew_matrix();
-		stuff->UpdateBuffer(0, sizeof(glm::mat4), glm::value_ptr(pvMatrix));
-		stuff->UpdateBuffer(sizeof(glm::mat4), sizeof(glm::vec3), glm::value_ptr(camera_pos));
-		phongShader.SetUniformMatrix4fv("projection_view_matrix", pvMatrix);
+		uniformBuffer->UpdateBufferData(0, sizeof(glm::mat4), glm::value_ptr(pvMatrix));
+		uniformBuffer->UpdateBufferData(sizeof(glm::mat4), sizeof(glm::vec4), glm::value_ptr(camera_pos));
+		// First directional light.
+		uniformBuffer->UpdateBufferData(sizeof(glm::mat4) + sizeof(glm::vec4), sizeof(glm::vec4), glm::value_ptr(glm::vec4(dirLight1.position, 1.0f)));
+		uniformBuffer->UpdateBufferData(sizeof(glm::mat4) + 2 * sizeof(glm::vec4), sizeof(glm::vec4), glm::value_ptr(glm::vec4(dirLight1.color, 1.0f)));
+		// Second directional light.
+		uniformBuffer->UpdateBufferData(sizeof(glm::mat4) + 3 * sizeof(glm::vec4), sizeof(glm::vec4), glm::value_ptr(glm::vec4(dirLight2.position, 1.0f)));
+		uniformBuffer->UpdateBufferData(sizeof(glm::mat4) + 4 * sizeof(glm::vec4), sizeof(glm::vec4), glm::value_ptr(glm::vec4(dirLight2.color, 1.0f)));
 
 		glm::mat4 model = glm::mat4(1);
 		model[3] = glm::vec4(0.0, 0.0, 0.0, 1.0);
 		model = glm::rotate(model, 3.1415f / 2.0f, glm::vec3(0.0, 1.0, 0.0));
 
-		phongShader.SetUniformMatrix4fv("model_matrix", model);
-
-		phongShader.SetUniform1i("albedo_map", 2);
-		phongShader.SetUniform1i("normal_map", 3);
-		Draw(weapon.GetMeshes().at(0), shieldTex, shieldNormal);
-
-		phongShader.SetUniform1i("albedo_map", 0);
-		phongShader.SetUniform1i("normal_map", 1);
-		Draw(weapon.GetMeshes().at(1), swordTex, swordNormal);
-		
+		Draw(weapon.GetMeshes().at(1), swordMaterial, model);
+		Draw(weapon.GetMeshes().at(0), shieldMaterial, model);		
 
 		glfwSwapBuffers(window);
 		glfwPollEvents();
-
-		time += deltatime;
 	}
 
 	glfwDestroyWindow(window);
 	glfwTerminate();
 
-	delete camera_ptr;
+	delete cameraPtr;
 	delete sphere;
-	delete material;
-	delete stuff;
+	delete uniformBuffer;
 	return 0;
 }
 
-void Draw(const Mesh& mesh, Texture& albedo, Texture& normal)
+void Draw(const Mesh& mesh, Material& material, glm::mat4 modelMatrix)
 {
-	albedo.Bind();
-	normal.Bind();
+	material.SetValue("model_matrix", GL_FLOAT_MAT4, (void*)& modelMatrix);
+	material.Bind();
 	mesh.Bind();
 
 	glDrawElements(GL_TRIANGLES, mesh.GetIndicesCount(), GL_UNSIGNED_INT, 0);
 
+	material.Unbind();
 	mesh.Unbind();
-	albedo.Unbind();
-	normal.Bind();
 }
 
-void Draw(const MeshGroup& group, Texture& albedo, Texture& normal)
+void Draw(const MeshGroup& group, Material& material, glm::mat4 modelMatrix)
 {
 	for (auto m : group.GetMeshes())
 	{
-		Draw(m, albedo, normal);
+		Draw(m, material, modelMatrix);
 	}
 }

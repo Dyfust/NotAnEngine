@@ -57,7 +57,7 @@ void Shader::CreateShader(const char* vertexPath, const char* fragmentPath)
 		delete[] output;
 	}
 
-	LoadUniforms();
+	CacheUniforms();
 }
 
 void Shader::CompileShader(unsigned int shaderID)
@@ -88,33 +88,33 @@ void Shader::LoadShaderFile(const char* path, char** srcBuffer)
 	*srcBuffer = (char*)_stringBuffer.c_str();
 }
 
-void Shader::LoadUniforms()
+void Shader::CacheUniforms()
 {
-	int count;
-	glGetProgramiv(_shaderProgramID, GL_ACTIVE_UNIFORMS, &count);
+	//int count;
+	//glGetProgramiv(_shaderProgramID, GL_ACTIVE_UNIFORMS, &count);
 
-	char tmpName[Uniform::nameBufferSize];
-	int tmpSize;
-	int tmpLength;
-	GLenum tmpType;
+	//char tmpName[Uniform::nameBufferSize];
+	//int tmpSize;
+	//int tmpLength;
+	//GLenum tmpType;
 
-	Uniform tmpUniform;
+	//Uniform tmpUniform;
 
-	for (size_t i = 0; i < count; i++)
-	{	
-		glGetActiveUniform(_shaderProgramID, i, Uniform::nameBufferSize, &tmpLength, &tmpSize, &tmpType, tmpName);
-		strcpy_s(tmpUniform._name, tmpName);
-		tmpUniform._type = tmpType;
-		_uniforms.push_back(tmpUniform);
-	}
+	//for (size_t i = 0; i < count; i++)
+	//{	
+	//	glGetActiveUniform(_shaderProgramID, i, Uniform::nameBufferSize, &tmpLength, &tmpSize, &tmpType, tmpName);
+	//	strcpy_s(tmpUniform._name, tmpName);
+	//	tmpUniform._type = tmpType;
+	//	_uniforms.push_back(tmpUniform);
+	//}
 
-	for (auto u : _uniforms)
-	{
-		char buffer[32]{ 0 };
-		sprintf_s(buffer, "%X", u._type);
-		std::string name = u._name;
-		std::cout << name << ", " << buffer << std::endl;
-	}
+	//for (auto u : _uniforms)
+	//{
+	//	char buffer[32]{ 0 };
+	//	sprintf_s(buffer, "%X", u._type);
+	//	std::string name = u._name;
+	//	std::cout << name << ", " << buffer << std::endl;
+	//}
 
 	//int indicesCount = -1;
 	//glGetActiveUniformBlockiv(_shaderProgramID, 0, GL_UNIFORM_BLOCK_ACTIVE_UNIFORMS, &indicesCount);
@@ -127,8 +127,6 @@ void Shader::LoadUniforms()
 	//{
 	//	std::cout << indices[i] << ", ";
 	//}
-
-	std::cout << std::endl;
 }
 
 void Shader::SetUniformMatrix4fv(const char* name, glm::mat4& value)

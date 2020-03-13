@@ -12,7 +12,7 @@ public:
 	UniformBuffer(unsigned int bindingPoint, unsigned int size, GLenum usage);
 	~UniformBuffer();
 
-	void UpdateBuffer(unsigned int offset, unsigned int size, const void* data);
+	void UpdateBufferData(unsigned int offset, unsigned int size, const void* data);
 
 	void Bind();
 	void Unbind();

@@ -28,7 +28,7 @@ UniformBuffer::~UniformBuffer()
 	glDeleteBuffers(1, &_bufferID);
 }
 
-void UniformBuffer::UpdateBuffer(unsigned int offset, unsigned int size, const void* data)
+void UniformBuffer::UpdateBufferData(unsigned int offset, unsigned int size, const void* data)
 {
 	Bind();
 	glBufferSubData(GL_UNIFORM_BUFFER, offset, size, data);

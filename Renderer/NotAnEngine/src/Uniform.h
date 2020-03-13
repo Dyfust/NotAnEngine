@@ -2,8 +2,11 @@ class Uniform
 {
 public:
 	const static int nameBufferSize = 32;
+
+	Uniform(const char* name, unsigned int type, void* value);
+
 private:
-	char _name[Uniform::nameBufferSize]{0};
+	const char* _name;
 	unsigned int _type;
 	void* _value;
 

@@ -6,7 +6,6 @@ class Texture
 {
 private:
 	unsigned int _textureID;
-	unsigned int _slot;
 	int _width;
 	int _height;
 	int _nrChannels;
@@ -14,10 +13,10 @@ private:
 	unsigned char* _localBuffer;
 
 public:
-	Texture(const char* path, unsigned int slot = 0);
+	Texture(const char* path);
 	~Texture();
 
-	void Bind();
+	void Bind(unsigned int slot);
 	void Unbind();
 };
 
