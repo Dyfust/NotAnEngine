@@ -1,5 +1,8 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
+  </PropertyGroup>
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|x64">
       <Configuration>Debug</Configuration>
@@ -9,113 +12,294 @@
       <Configuration>Release</Configuration>
       <Platform>x64</Platform>
     </ProjectConfiguration>
+    <ProjectConfiguration Include="MinSizeRel|x64">
+      <Configuration>MinSizeRel</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="RelWithDebInfo|x64">
+      <Configuration>RelWithDebInfo</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <VCProjectVersion>16.0</VCProjectVersion>
-    <ProjectGuid>{B3AA6A0F-6FB1-45ED-A666-63EDE389738C}</ProjectGuid>
-    <RootNamespace>Renderer</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectGuid>{175830E4-A35E-3F08-9E04-A2F198BECDDE}</ProjectGuid>
+    <WindowsTargetPlatformVersion>10.0.18362.0</WindowsTargetPlatformVersion>
+    <Keyword>Win32Proj</Keyword>
+    <Platform>x64</Platform>
     <ProjectName>NotAnEngine</ProjectName>
+    <VCProjectUpgraderObjectName>NoUpgrade</VCProjectUpgraderObjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
-    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>MultiByte</CharacterSet>
     <PlatformToolset>v142</PlatformToolset>
-    <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
-    <UseDebugLibraries>false</UseDebugLibraries>
+    <CharacterSet>MultiByte</CharacterSet>
     <PlatformToolset>v142</PlatformToolset>
-    <WholeProgramOptimization>true</WholeProgramOptimization>
-    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
   </ImportGroup>
-  <ImportGroup Label="Shared">
-  </ImportGroup>
-  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-  </ImportGroup>
-  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+  <ImportGroup Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <LinkIncremental>true</LinkIncremental>
-    <OutDir>$(SolutionDir)bin\$(Configuration)-$(Platform)\$(ProjectName)\</OutDir>
-    <IntDir>$(SolutionDir)bin-int\$(Configuration)-$(Platform)\$(ProjectName)\</IntDir>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <LinkIncremental>false</LinkIncremental>
-    <OutDir>$(SolutionDir)bin\$(Configuration)-$(Platform)\$(ProjectName)\</OutDir>
-    <IntDir>$(SolutionDir)bin-int\$(Configuration)-$(Platform)\$(ProjectName)\</IntDir>
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Users\Rey\Desktop\Repos\Renderer\Renderer\NotAnEngine\bin\Debug\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotAnEngine.dir\Debug\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotAnEngine</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.exe</TargetExt>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</LinkIncremental>
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</GenerateManifest>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Users\Rey\Desktop\Repos\Renderer\Renderer\NotAnEngine\bin\Release\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotAnEngine.dir\Release\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotAnEngine</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.exe</TargetExt>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkIncremental>
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</GenerateManifest>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Users\Rey\Desktop\Repos\Renderer\Renderer\NotAnEngine\bin\MinSizeRel\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">NotAnEngine.dir\MinSizeRel\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">NotAnEngine</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">.exe</TargetExt>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkIncremental>
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">true</GenerateManifest>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Users\Rey\Desktop\Repos\Renderer\Renderer\NotAnEngine\bin\RelWithDebInfo\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">NotAnEngine.dir\RelWithDebInfo\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">NotAnEngine</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">.exe</TargetExt>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">true</LinkIncremental>
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">true</GenerateManifest>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
+      <AdditionalIncludeDirectories>C:\Users\Rey\Desktop\Repos\Renderer\Renderer\NotAnEngine\vendor\glcore;C:\Users\Rey\Desktop\Repos\Renderer\Renderer\NotAnEngine\vendor\glfw\GLFW;C:\Users\Rey\Desktop\Repos\Renderer\Renderer\NotAnEngine\vendor\glm;C:\Users\Rey\Desktop\Repos\Renderer\Renderer\NotAnEngine\vendor\obj_loader;C:\Users\Rey\Desktop\Repos\Renderer\Renderer\NotAnEngine\vendor\stb_image;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
+      <LanguageStandard>stdcpp14</LanguageStandard>
+      <Optimization>Disabled</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <UseFullPaths>false</UseFullPaths>
       <WarningLevel>Level3</WarningLevel>
-      <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)vendor/stb_image;$(ProjectDir)vendor/glcore;$(ProjectDir)vendor/glfw/GLFW;$(ProjectDir)vendor/glm;$(ProjectDir)vendor/obj_loader</AdditionalIncludeDirectories>
-      <LanguageStandard>stdcpp17</LanguageStandard>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;CMAKE_INTDIR="Debug";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
     </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;CMAKE_INTDIR=\"Debug\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Users\Rey\Desktop\Repos\Renderer\Renderer\NotAnEngine\vendor\glcore;C:\Users\Rey\Desktop\Repos\Renderer\Renderer\NotAnEngine\vendor\glfw\GLFW;C:\Users\Rey\Desktop\Repos\Renderer\Renderer\NotAnEngine\vendor\glm;C:\Users\Rey\Desktop\Repos\Renderer\Renderer\NotAnEngine\vendor\obj_loader;C:\Users\Rey\Desktop\Repos\Renderer\Renderer\NotAnEngine\vendor\stb_image;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\Rey\Desktop\Repos\Renderer\Renderer\NotAnEngine\vendor\glcore;C:\Users\Rey\Desktop\Repos\Renderer\Renderer\NotAnEngine\vendor\glfw\GLFW;C:\Users\Rey\Desktop\Repos\Renderer\Renderer\NotAnEngine\vendor\glm;C:\Users\Rey\Desktop\Repos\Renderer\Renderer\NotAnEngine\vendor\obj_loader;C:\Users\Rey\Desktop\Repos\Renderer\Renderer\NotAnEngine\vendor\stb_image;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
     <Link>
-      <SubSystem>Console</SubSystem>
+      <AdditionalDependencies>opengl32.lib;glfw3.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:/Users/Rey/Desktop/Repos/Renderer/Renderer/NotAnEngine/vendor/glfw;C:/Users/Rey/Desktop/Repos/Renderer/Renderer/NotAnEngine/vendor/glfw/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)opengl32.lib;glfw3.lib;</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(ProjectDir)vendor/glfw</AdditionalLibraryDirectories>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ImportLibrary>C:/Users/Rey/Desktop/Repos/Renderer/Renderer/NotAnEngine/bin/Debug/NotAnEngine.lib</ImportLibrary>
+      <ProgramDataBaseFile>C:/Users/Rey/Desktop/Repos/Renderer/Renderer/NotAnEngine/bin/Debug/NotAnEngine.pdb</ProgramDataBaseFile>
+      <SubSystem>Console</SubSystem>
     </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
+      <AdditionalIncludeDirectories>C:\Users\Rey\Desktop\Repos\Renderer\Renderer\NotAnEngine\vendor\glcore;C:\Users\Rey\Desktop\Repos\Renderer\Renderer\NotAnEngine\vendor\glfw\GLFW;C:\Users\Rey\Desktop\Repos\Renderer\Renderer\NotAnEngine\vendor\glm;C:\Users\Rey\Desktop\Repos\Renderer\Renderer\NotAnEngine\vendor\obj_loader;C:\Users\Rey\Desktop\Repos\Renderer\Renderer\NotAnEngine\vendor\stb_image;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <LanguageStandard>stdcpp14</LanguageStandard>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <UseFullPaths>false</UseFullPaths>
       <WarningLevel>Level3</WarningLevel>
-      <FunctionLevelLinking>true</FunctionLevelLinking>
-      <IntrinsicFunctions>true</IntrinsicFunctions>
-      <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)vendor/stb_image;$(ProjectDir)vendor/glcore;$(ProjectDir)vendor/glfw/GLFW;$(ProjectDir)vendor/glm;$(ProjectDir)vendor/obj_loader</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;CMAKE_INTDIR="Release";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
     </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;CMAKE_INTDIR=\"Release\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Users\Rey\Desktop\Repos\Renderer\Renderer\NotAnEngine\vendor\glcore;C:\Users\Rey\Desktop\Repos\Renderer\Renderer\NotAnEngine\vendor\glfw\GLFW;C:\Users\Rey\Desktop\Repos\Renderer\Renderer\NotAnEngine\vendor\glm;C:\Users\Rey\Desktop\Repos\Renderer\Renderer\NotAnEngine\vendor\obj_loader;C:\Users\Rey\Desktop\Repos\Renderer\Renderer\NotAnEngine\vendor\stb_image;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\Rey\Desktop\Repos\Renderer\Renderer\NotAnEngine\vendor\glcore;C:\Users\Rey\Desktop\Repos\Renderer\Renderer\NotAnEngine\vendor\glfw\GLFW;C:\Users\Rey\Desktop\Repos\Renderer\Renderer\NotAnEngine\vendor\glm;C:\Users\Rey\Desktop\Repos\Renderer\Renderer\NotAnEngine\vendor\obj_loader;C:\Users\Rey\Desktop\Repos\Renderer\Renderer\NotAnEngine\vendor\stb_image;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
     <Link>
+      <AdditionalDependencies>opengl32.lib;glfw3.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:/Users/Rey/Desktop/Repos/Renderer/Renderer/NotAnEngine/vendor/glfw;C:/Users/Rey/Desktop/Repos/Renderer/Renderer/NotAnEngine/vendor/glfw/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ImportLibrary>C:/Users/Rey/Desktop/Repos/Renderer/Renderer/NotAnEngine/bin/Release/NotAnEngine.lib</ImportLibrary>
+      <ProgramDataBaseFile>C:/Users/Rey/Desktop/Repos/Renderer/Renderer/NotAnEngine/bin/Release/NotAnEngine.pdb</ProgramDataBaseFile>
       <SubSystem>Console</SubSystem>
-      <EnableCOMDATFolding>true</EnableCOMDATFolding>
-      <OptimizeReferences>true</OptimizeReferences>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)opengl32.lib;glfw3.lib;</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(ProjectDir)vendor/glfw</AdditionalLibraryDirectories>
     </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\Users\Rey\Desktop\Repos\Renderer\Renderer\NotAnEngine\vendor\glcore;C:\Users\Rey\Desktop\Repos\Renderer\Renderer\NotAnEngine\vendor\glfw\GLFW;C:\Users\Rey\Desktop\Repos\Renderer\Renderer\NotAnEngine\vendor\glm;C:\Users\Rey\Desktop\Repos\Renderer\Renderer\NotAnEngine\vendor\obj_loader;C:\Users\Rey\Desktop\Repos\Renderer\Renderer\NotAnEngine\vendor\stb_image;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <LanguageStandard>stdcpp14</LanguageStandard>
+      <Optimization>MinSpace</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;CMAKE_INTDIR="MinSizeRel";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;CMAKE_INTDIR=\"MinSizeRel\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Users\Rey\Desktop\Repos\Renderer\Renderer\NotAnEngine\vendor\glcore;C:\Users\Rey\Desktop\Repos\Renderer\Renderer\NotAnEngine\vendor\glfw\GLFW;C:\Users\Rey\Desktop\Repos\Renderer\Renderer\NotAnEngine\vendor\glm;C:\Users\Rey\Desktop\Repos\Renderer\Renderer\NotAnEngine\vendor\obj_loader;C:\Users\Rey\Desktop\Repos\Renderer\Renderer\NotAnEngine\vendor\stb_image;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\Rey\Desktop\Repos\Renderer\Renderer\NotAnEngine\vendor\glcore;C:\Users\Rey\Desktop\Repos\Renderer\Renderer\NotAnEngine\vendor\glfw\GLFW;C:\Users\Rey\Desktop\Repos\Renderer\Renderer\NotAnEngine\vendor\glm;C:\Users\Rey\Desktop\Repos\Renderer\Renderer\NotAnEngine\vendor\obj_loader;C:\Users\Rey\Desktop\Repos\Renderer\Renderer\NotAnEngine\vendor\stb_image;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Link>
+      <AdditionalDependencies>opengl32.lib;glfw3.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:/Users/Rey/Desktop/Repos/Renderer/Renderer/NotAnEngine/vendor/glfw;C:/Users/Rey/Desktop/Repos/Renderer/Renderer/NotAnEngine/vendor/glfw/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ImportLibrary>C:/Users/Rey/Desktop/Repos/Renderer/Renderer/NotAnEngine/bin/MinSizeRel/NotAnEngine.lib</ImportLibrary>
+      <ProgramDataBaseFile>C:/Users/Rey/Desktop/Repos/Renderer/Renderer/NotAnEngine/bin/MinSizeRel/NotAnEngine.pdb</ProgramDataBaseFile>
+      <SubSystem>Console</SubSystem>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\Users\Rey\Desktop\Repos\Renderer\Renderer\NotAnEngine\vendor\glcore;C:\Users\Rey\Desktop\Repos\Renderer\Renderer\NotAnEngine\vendor\glfw\GLFW;C:\Users\Rey\Desktop\Repos\Renderer\Renderer\NotAnEngine\vendor\glm;C:\Users\Rey\Desktop\Repos\Renderer\Renderer\NotAnEngine\vendor\obj_loader;C:\Users\Rey\Desktop\Repos\Renderer\Renderer\NotAnEngine\vendor\stb_image;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <LanguageStandard>stdcpp14</LanguageStandard>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;CMAKE_INTDIR="RelWithDebInfo";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;CMAKE_INTDIR=\"RelWithDebInfo\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Users\Rey\Desktop\Repos\Renderer\Renderer\NotAnEngine\vendor\glcore;C:\Users\Rey\Desktop\Repos\Renderer\Renderer\NotAnEngine\vendor\glfw\GLFW;C:\Users\Rey\Desktop\Repos\Renderer\Renderer\NotAnEngine\vendor\glm;C:\Users\Rey\Desktop\Repos\Renderer\Renderer\NotAnEngine\vendor\obj_loader;C:\Users\Rey\Desktop\Repos\Renderer\Renderer\NotAnEngine\vendor\stb_image;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\Rey\Desktop\Repos\Renderer\Renderer\NotAnEngine\vendor\glcore;C:\Users\Rey\Desktop\Repos\Renderer\Renderer\NotAnEngine\vendor\glfw\GLFW;C:\Users\Rey\Desktop\Repos\Renderer\Renderer\NotAnEngine\vendor\glm;C:\Users\Rey\Desktop\Repos\Renderer\Renderer\NotAnEngine\vendor\obj_loader;C:\Users\Rey\Desktop\Repos\Renderer\Renderer\NotAnEngine\vendor\stb_image;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Link>
+      <AdditionalDependencies>opengl32.lib;glfw3.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:/Users/Rey/Desktop/Repos/Renderer/Renderer/NotAnEngine/vendor/glfw;C:/Users/Rey/Desktop/Repos/Renderer/Renderer/NotAnEngine/vendor/glfw/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ImportLibrary>C:/Users/Rey/Desktop/Repos/Renderer/Renderer/NotAnEngine/bin/RelWithDebInfo/NotAnEngine.lib</ImportLibrary>
+      <ProgramDataBaseFile>C:/Users/Rey/Desktop/Repos/Renderer/Renderer/NotAnEngine/bin/RelWithDebInfo/NotAnEngine.pdb</ProgramDataBaseFile>
+      <SubSystem>Console</SubSystem>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\UniformBuffer.cpp" />
-    <ClCompile Include="src\Camera.cpp" />
-    <ClCompile Include="src\main.cpp" />
-    <ClCompile Include="src\Material.cpp" />
-    <ClCompile Include="src\Mesh.cpp" />
-    <ClCompile Include="src\MeshGroup.cpp" />
-    <ClCompile Include="src\MeshRenderer.cpp" />
-    <ClCompile Include="src\Primitives.cpp" />
-    <ClCompile Include="src\Shader.cpp" />
-    <ClCompile Include="src\Texture.cpp" />
-    <ClCompile Include="src\Uniform.cpp" />
-    <ClCompile Include="src\Vertex.cpp" />
+    <ClCompile Include="C:\Users\Rey\Desktop\Repos\Renderer\Renderer\NotAnEngine\src\Camera.cpp" />
+    <ClCompile Include="Entity.cpp" />
+    <ClInclude Include="C:\Users\Rey\Desktop\Repos\Renderer\Renderer\NotAnEngine\src\Camera.h" />
+    <ClInclude Include="C:\Users\Rey\Desktop\Repos\Renderer\Renderer\NotAnEngine\src\Lights.h" />
+    <ClCompile Include="C:\Users\Rey\Desktop\Repos\Renderer\Renderer\NotAnEngine\src\Material.cpp" />
+    <ClInclude Include="C:\Users\Rey\Desktop\Repos\Renderer\Renderer\NotAnEngine\src\Material.h" />
+    <ClCompile Include="C:\Users\Rey\Desktop\Repos\Renderer\Renderer\NotAnEngine\src\Mesh.cpp" />
+    <ClInclude Include="C:\Users\Rey\Desktop\Repos\Renderer\Renderer\NotAnEngine\src\Mesh.h" />
+    <ClCompile Include="C:\Users\Rey\Desktop\Repos\Renderer\Renderer\NotAnEngine\src\MeshGroup.cpp" />
+    <ClInclude Include="C:\Users\Rey\Desktop\Repos\Renderer\Renderer\NotAnEngine\src\MeshGroup.h" />
+    <ClCompile Include="C:\Users\Rey\Desktop\Repos\Renderer\Renderer\NotAnEngine\src\MeshRenderer.cpp" />
+    <ClCompile Include="C:\Users\Rey\Desktop\Repos\Renderer\Renderer\NotAnEngine\src\Primitives.cpp" />
+    <ClInclude Include="C:\Users\Rey\Desktop\Repos\Renderer\Renderer\NotAnEngine\src\Primitives.h" />
+    <ClCompile Include="C:\Users\Rey\Desktop\Repos\Renderer\Renderer\NotAnEngine\src\Renderer.cpp" />
+    <ClInclude Include="C:\Users\Rey\Desktop\Repos\Renderer\Renderer\NotAnEngine\src\Renderer.h" />
+    <ClCompile Include="C:\Users\Rey\Desktop\Repos\Renderer\Renderer\NotAnEngine\src\Shader.cpp" />
+    <ClInclude Include="C:\Users\Rey\Desktop\Repos\Renderer\Renderer\NotAnEngine\src\Shader.h" />
+    <ClCompile Include="C:\Users\Rey\Desktop\Repos\Renderer\Renderer\NotAnEngine\src\Texture.cpp" />
+    <ClInclude Include="C:\Users\Rey\Desktop\Repos\Renderer\Renderer\NotAnEngine\src\Texture.h" />
+    <ClCompile Include="C:\Users\Rey\Desktop\Repos\Renderer\Renderer\NotAnEngine\src\Uniform.cpp" />
+    <ClInclude Include="C:\Users\Rey\Desktop\Repos\Renderer\Renderer\NotAnEngine\src\Uniform.h" />
+    <ClCompile Include="C:\Users\Rey\Desktop\Repos\Renderer\Renderer\NotAnEngine\src\UniformBuffer.cpp" />
+    <ClInclude Include="C:\Users\Rey\Desktop\Repos\Renderer\Renderer\NotAnEngine\src\UniformBuffer.h" />
+    <ClCompile Include="C:\Users\Rey\Desktop\Repos\Renderer\Renderer\NotAnEngine\src\Vertex.cpp" />
+    <ClInclude Include="C:\Users\Rey\Desktop\Repos\Renderer\Renderer\NotAnEngine\src\Vertex.h" />
+    <ClCompile Include="C:\Users\Rey\Desktop\Repos\Renderer\Renderer\NotAnEngine\src\main.cpp" />
+    <ClCompile Include="C:\Users\Rey\Desktop\Repos\Renderer\Renderer\NotAnEngine\vendor\glcore\gl_core_4_5.c">
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">CompileAsC</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">CompileAsC</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">CompileAsC</CompileAs>
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">CompileAsC</CompileAs>
+    </ClCompile>
+    <ClInclude Include="C:\Users\Rey\Desktop\Repos\Renderer\Renderer\NotAnEngine\vendor\glcore\gl_core_4_5.h" />
+    <ClInclude Include="Entity.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Camera.h" />
-    <ClInclude Include="src\Lights.h" />
-    <ClInclude Include="src\Material.h" />
-    <ClInclude Include="src\Mesh.h" />
-    <ClInclude Include="src\MeshGroup.h" />
-    <ClInclude Include="src\MeshRenderer.h" />
-    <ClInclude Include="src\Primitives.h" />
-    <ClInclude Include="src\Renderer.h" />
-    <ClInclude Include="src\Shader.h" />
-    <ClInclude Include="src\Texture.h" />
-    <ClInclude Include="src\Uniform.h" />
-    <ClInclude Include="src\Vertex.h" />
-    <ClInclude Include="src\UniformBuffer.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

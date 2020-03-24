@@ -3,7 +3,7 @@
 
 using uint = unsigned int;
 #define M_PI 3.14159
-Mesh* Primitives::GenerateSphere(float radius, int stackCount, int sectorCount)
+Mesh * Primitives::GenerateSphere(float radius, int stackCount, int sectorCount)
 {
 	std::vector<glm::vec4> positions_buffer;
 	std::vector<glm::vec2> uv_buffer;
@@ -91,4 +91,30 @@ Mesh* Primitives::GenerateSphere(float radius, int stackCount, int sectorCount)
 
 	// creating mesh
 	return new Mesh(vertices, index_buffer);
+}
+
+Mesh* Primitives::GenerateQuad()
+{
+	Mesh* ret = nullptr;
+	std::vector<Vertex> vertices;
+
+	Vertex vert1 = Vertex(glm::vec3(-0.5, 0.5, 0.0), glm::vec3(0.0, 0.0, 1.0), glm::vec2(0.0, 1.0)); // top left
+	vertices.push_back(vert1);
+
+	Vertex vert2 = Vertex(glm::vec3(0.5, 0.5, 0.0), glm::vec3(0.0, 0.0, 1.0), glm::vec2(1.0, 1.0)); // top right
+	vertices.push_back(vert2);
+
+	Vertex vert3 = Vertex(glm::vec3(-0.5, -0.5, 0.0), glm::vec3(0.0, 0.0, 1.0), glm::vec2(0.0, 0.0)); // bottom left
+	vertices.push_back(vert3);
+	Vertex vert4 = Vertex(glm::vec3(0.5, -0.5, 0.0), glm::vec3(0.0, 0.0, 1.0), glm::vec2(1.0, 0.0)); // bottom right
+	vertices.push_back(vert4);
+
+	std::vector<uint> indices = std::vector<uint>(
+		{
+			0, 2, 1,
+			1, 2, 3
+		});
+
+	ret = new Mesh(vertices, indices);
+	return ret;
 }

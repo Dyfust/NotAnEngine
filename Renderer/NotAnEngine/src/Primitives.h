@@ -5,5 +5,6 @@ class Primitives
 {
 public:
 	static Mesh* GenerateSphere(float radius, int stackCount, int sectorCount);
+	static Mesh* GenerateQuad();
 };
 
