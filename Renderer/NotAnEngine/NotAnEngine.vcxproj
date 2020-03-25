@@ -265,7 +265,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="C:\Users\Rey\Desktop\Repos\Renderer\Renderer\NotAnEngine\src\Camera.cpp" />
-    <ClCompile Include="Entity.cpp" />
+    <ClCompile Include="src\NotAnEngineCore.cpp" />
+    <ClCompile Include="src\Window.cpp" />
     <ClInclude Include="C:\Users\Rey\Desktop\Repos\Renderer\Renderer\NotAnEngine\src\Camera.h" />
     <ClInclude Include="C:\Users\Rey\Desktop\Repos\Renderer\Renderer\NotAnEngine\src\Lights.h" />
     <ClCompile Include="C:\Users\Rey\Desktop\Repos\Renderer\Renderer\NotAnEngine\src\Material.cpp" />
@@ -297,7 +298,8 @@
       <CompileAs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">CompileAsC</CompileAs>
     </ClCompile>
     <ClInclude Include="C:\Users\Rey\Desktop\Repos\Renderer\Renderer\NotAnEngine\vendor\glcore\gl_core_4_5.h" />
-    <ClInclude Include="Entity.h" />
+    <ClInclude Include="src\NotAnEngineCore.h" />
+    <ClInclude Include="src\Window.h" />
   </ItemGroup>
   <ItemGroup>
   </ItemGroup>

@@ -4,7 +4,7 @@
 Camera::Camera()
 {
 	SetPerspective(_defaultFOV, _defaultAspectRatio, _defaultNear, _defaultFar);
-	SetLookAt(glm::vec3(0.0, 0.0, -5.0), glm::vec3(0.0, 0.0, 0.0), glm::vec3(0, 1, 0)); // Default
+	SetLookAt(glm::vec3(0.0, 0.0, 1.0), glm::vec3(0.0, 0.0, 0.0), glm::vec3(0, 1, 0)); // Default
 }
 
 Camera::Camera(float fov, float aspect_ratio, float near, float far)
