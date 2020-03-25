@@ -25,8 +25,10 @@ private:
 protected:
 	void SetClearColor(float r, float g, float b, float a);
 
+	// Should be pure virtual and derived from client sided project. 
 	virtual void OnStart();
 	virtual void OnUpdate(float deltaTime);
+	virtual void OnFixedUpdate(float timeStep);
 	virtual void OnShutdown();
 
 	Renderer* _renderer;

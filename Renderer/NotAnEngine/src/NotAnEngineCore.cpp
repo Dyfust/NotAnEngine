@@ -29,7 +29,6 @@ NotAnEngineCore::NotAnEngineCore(const char* title, unsigned int width, unsigned
 		return;
 	}
 
-
 	_renderer = new Renderer();
 	_mainCamera = new Camera();
 	_renderer->SetCamera(_mainCamera);
@@ -89,7 +88,7 @@ void NotAnEngineCore::OnStart()
 	glm::vec4 spriteColor = glm::vec4(1.0, 1.0, 1.0, 1.0);
 
 	_spriteMaterial = new Material(*_shader2D);
-	_spriteMaterial->SetValue("color", GL_FLOAT_VEC4, (void*)& spriteColor);
+	_spriteMaterial->SetValue("color", GL_FLOAT_VEC4, (void*)&spriteColor);
 	_spriteMaterial->AddTexture("albedo_map", _spriteTexture);
 }
 
@@ -98,6 +97,11 @@ void NotAnEngineCore::OnUpdate(float deltaTime)
 	_mainCamera->Update(deltaTime);
 
 	_renderer->Render(*_quad, *_spriteMaterial, glm::mat4(1));
+}
+
+void NotAnEngineCore::OnFixedUpdate(float timeStep)
+{
+
 }
 
 void NotAnEngineCore::OnShutdown()

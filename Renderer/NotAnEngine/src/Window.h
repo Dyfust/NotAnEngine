@@ -22,4 +22,3 @@ public:
 	const unsigned int GetWidth() const;
 	const unsigned int GetHeight() const;
 };
-
