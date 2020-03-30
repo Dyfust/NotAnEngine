@@ -8,7 +8,7 @@ void Entity::UpdateWorldMatrix()
 	else
 		_worldMatrix = _localMatrix;
 
-	UpdateChildrenWorldMatrix()
+	UpdateChildrenWorldMatrix();
 }
 
 void Entity::UpdateChildrenWorldMatrix()
@@ -40,8 +40,8 @@ void Entity::Rotate(glm::vec3 axis, float angle)
 
 void Entity::SetParent(Entity* parent)
 {
-	// Parent validation.
-	if (parent == this || std::find(_children.begin(), _children.end(), parent) == _children.end) 
+	// Validate the parent first.
+	if (parent == this || std::find(_children.begin(), _children.end(), parent) == _children.end()) 
 	{
 		std::cout << "Cannot be parented to itself or a child." << std::endl;
 		return;
@@ -52,7 +52,8 @@ void Entity::SetParent(Entity* parent)
 
 void Entity::AddChild(Entity* child)
 {
-	if (child == _parent || std::find(_children.begin(), _children.end(), child) == _children.end)
+	// Validate the child first.
+	if (child == _parent || std::find(_children.begin(), _children.end(), child) == _children.end())
 	{
 		std::cout << "The parent cannot be a child, or the child already exists." << std::endl;
 		return;

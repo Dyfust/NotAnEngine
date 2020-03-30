@@ -77,26 +77,18 @@ vec3 CalculatePointLight(PointLight point_light, vec3 frag_position, vec3 normal
 void main()
 {
     vec2 uv = vec2(i.uv.x, 1.0 - i.uv.y);
-	vec3 normal = texture(normal_map, uv).rgb;
-	normal = i.TBN * normalize(normal * 2.0 - 1.0);
+	vec3 normal = texture(normal_map, uv).xyz * 2.0 - 1.0;
+	normal = i.TBN * normal;
 	
 	vec3 view_point = vec3(camera_position); 
     vec3 view_dir = normalize(view_point - i.frag_pos);
 	
-	PointLight pLight;
-	pLight.color = vec4(1.0, 0.0, 0.0, 1.0);
-	pLight.position = vec4(0.0, 0.0, -5.0, 1.0);
-	pLight.constant = 5.0;
-	pLight.linear = 2.0;
-	pLight.quadratic = 2.0;
-	
-	
 	vec3 lighting_color = vec3(0.0, 0.0, 0.0);
-	for (int light = 0; light < 2; ++light)
+	for (int light = 0; light < 1; ++light)
 	{
 		lighting_color += CalculateDirectionalLight(directional_light[light], i.frag_pos, normal, view_dir);
 	}
 	
 	vec3 texture_color = texture(albedo_map, uv).rgb;
-    out_color = vec4(lighting_color * texture_color * object_color.xyz, 1.0);
+    out_color = vec4(lighting_color * texture_color * object_color.rgb, 1.0);
 }

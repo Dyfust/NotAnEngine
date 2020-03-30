@@ -49,6 +49,7 @@
     <ClCompile Include="src\NotAnEngineCore.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Entity.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="C:\Users\Rey\Desktop\Repos\Renderer\Renderer\NotAnEngine\src\Camera.h">
@@ -96,6 +97,21 @@
     <ClInclude Include="src\NotAnEngineCore.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Entity.h" />
+    <ClInclude Include="src\Events\Event.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Events\MousePressEvent.h" />
+    <ClInclude Include="src\Events\MouseReleaseEvent.h" />
+    <ClInclude Include="src\Events\ButtonPressEvent.h" />
+    <ClInclude Include="src\Events\ButtonRepeatEvent.h" />
+    <ClInclude Include="src\Events\ButtonReleaseEvent.h" />
+    <ClInclude Include="src\Events\WindowResizeEvent.h" />
+    <ClInclude Include="src\Events\EventDispatcher.h" />
+    <ClInclude Include="src\Events\MouseMovedEvent.h" />
+    <ClInclude Include="src\Physics\Circle.h" />
+    <ClInclude Include="src\Physics\Collider2D.h" />
+    <ClInclude Include="src\Physics\PhysicsBody2D.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">

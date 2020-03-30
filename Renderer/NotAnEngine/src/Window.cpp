@@ -1,4 +1,6 @@
 #include "Window.h"
+#include "Events/MousePressEvent.h"
+#include "Events/MouseReleaseEvent.h"
 #include <iostream>
 
 Window::Window(unsigned int width, unsigned int height, const char* title)
@@ -13,11 +15,38 @@ Window::Window(unsigned int width, unsigned int height, const char* title)
 	{
 		std::cout << "GLFW failed to create window!" << std::endl;
 	}
+
+	/*glfwSetWindowUserPointer(_glfwWindowPtr, &_onEventCallback);
+	glfwSetMouseButtonCallback(_glfwWindowPtr, [](GLFWwindow* window, int button, int action, int mods)
+	{
+		fn& callback = *(fn*)glfwGetWindowUserPointer(window);
+
+		switch (action)
+		{
+			case GLFW_PRESS:
+			{
+				MousePressEvent p = MousePressEvent(button);
+				callback(p);
+				break;
+			}
+			case GLFW_RELEASE:
+			{
+				MouseReleaseEvent r = MouseReleaseEvent(button);
+				callback(r);
+				break;
+			}
+		}
+	});*/
 }
 
 Window::~Window()
 {
 	glfwDestroyWindow(_glfwWindowPtr);
+}
+
+void Window::SetOnEventCallback(fn callback)
+{
+	_onEventCallback = callback;
 }
 
 void Window::MakeContextCurrent()

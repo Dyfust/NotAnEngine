@@ -30,16 +30,20 @@ out VertexData
 
 void main()
 {
-	o.frag_pos = vec3(model_matrix * vec4(in_position, 1));
-	o.normal = mat3(transpose(inverse(model_matrix))) * in_normal;
 	o.uv = in_uv;
+	o.frag_pos = vec3(model_matrix * vec4(in_position, 1));
 	
-	vec4 bitangent = vec4(cross(o.normal, vec3(in_tangent) * in_tangent.w), 0.0);
-	vec3 T = normalize(mat3(model_matrix) * vec3(in_tangent));
-	vec3 B = normalize(mat3(model_matrix) * vec3(bitangent));
+	mat3 new_mod = mat3(transpose(inverse(model_matrix)));
+	
+	o.normal = new_mod * in_normal;
+	vec3 tangent = new_mod * in_tangent.xyz;
+	vec3 bitangent = cross(o.normal, tangent) * in_tangent.w;
+	
+	vec3 T = normalize(tangent);
+	vec3 B = normalize(bitangent);
 	vec3 N = o.normal;
 	
-	o.TBN = transpose(mat3(T, B, N));
-	
+	o.TBN = mat3(T, B, N);
+
 	gl_Position = (projection_view_matrix * model_matrix) * vec4(in_position, 1);
 }

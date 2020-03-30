@@ -8,6 +8,18 @@
 #include "gl_core_4_5.h"
 
 
+MeshGroup::MeshGroup()
+{
+}
+
+MeshGroup::~MeshGroup()
+{
+	for (size_t i = 0; i < _meshes.size(); i++)
+	{
+		delete _meshes[i];
+	}
+}
+
 void MeshGroup::Load(const char* path)
 {
 	std::vector<tinyobj::shape_t> shapes;
@@ -56,7 +68,7 @@ void MeshGroup::Load(const char* path)
 
 		CalculateTangents(verticies, s.mesh.indices);
 
-		_meshes.push_back(Mesh(verticies, s.mesh.indices));
+		_meshes.push_back(new Mesh(verticies, s.mesh.indices));
 	}
 }
 
@@ -64,9 +76,9 @@ void MeshGroup::Draw()
 {
 	for (auto& m : _meshes)
 	{
-		m.Bind();
-		glDrawElements(GL_TRIANGLES, m.GetIndicesCount(), GL_UNSIGNED_INT, 0);
-		m.Unbind();
+		m->Bind();
+		glDrawElements(GL_TRIANGLES, m->GetIndicesCount(), GL_UNSIGNED_INT, 0);
+		m->Unbind();
 	}
 }
 
@@ -136,7 +148,7 @@ void MeshGroup::CalculateTangents(std::vector<Vertex>& vertices, const std::vect
 	delete[] tan1;
 }
 
-const std::vector<Mesh>& MeshGroup::GetMeshes() const
+const std::vector<Mesh*>& MeshGroup::GetMeshes() const
 {
 	return _meshes;
 }

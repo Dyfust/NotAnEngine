@@ -34,12 +34,5 @@ void main()
 	o.normal = mat3(transpose(inverse(model_matrix))) * in_normal;
 	o.uv = in_uv;
 	
-	vec4 bitangent = vec4(cross(o.normal, vec3(in_tangent) * in_tangent.w), 0.0);
-	vec3 T = normalize(mat3(model_matrix) * vec3(in_tangent));
-	vec3 B = normalize(mat3(model_matrix) * vec3(bitangent));
-	vec3 N = o.normal;
-	
-	o.TBN = transpose(mat3(T, B, N));
-	
 	gl_Position = (projection_view_matrix * model_matrix) * vec4(in_position, 1);
 }

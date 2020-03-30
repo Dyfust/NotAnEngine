@@ -1,5 +1,7 @@
 #pragma once
 #include "glfw3.h"
+#include "Events/Event.h"
+#include <functional>
 
 class Window
 {
@@ -10,10 +12,14 @@ private:
 
 	GLFWwindow* _glfwWindowPtr;
 
+	typedef std::function<void(Event&)> fn;
+	fn _onEventCallback;
+
 public:
 	Window(unsigned int width, unsigned int height, const char* title);
 	~Window();
 
+	void SetOnEventCallback(fn callback);
 	void MakeContextCurrent();
 	void Update();
 

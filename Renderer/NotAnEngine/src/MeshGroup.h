@@ -5,13 +5,15 @@
 class MeshGroup
 {
 private:
-	std::vector<Mesh> _meshes;
+	std::vector<Mesh*> _meshes;
 
 public:
+	MeshGroup();
+	~MeshGroup();
+
 	void Load(const char* path);
 	void Draw();
 	void CalculateTangents(std::vector<Vertex>& vertices, const std::vector<unsigned int>& indices);
 
-	const std::vector<Mesh>& GetMeshes() const;
+	const std::vector<Mesh*>& GetMeshes() const;
 };
-

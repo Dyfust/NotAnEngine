@@ -32,6 +32,6 @@ public:
 	const glm::mat4& GetViewMatrix() const;
 	const glm::mat4& GetWorldMatrix() const;
 	const glm::mat4& GetProjectionViewMatrix() const;
-	const glm::vec3& GetPosition() const;
+	const glm::vec3 GetPosition() const;
 };
 

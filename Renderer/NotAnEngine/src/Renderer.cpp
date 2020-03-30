@@ -8,7 +8,7 @@
 Renderer::Renderer()
 {
 	_uniformBuffer = new UniformBuffer(5, sizeof(glm::mat4) + 3 * sizeof(glm::vec4), GL_DYNAMIC_DRAW);
-	_directionalLight = new DirectionalLight(glm::vec3(1.0, 0.0, -10.0), glm::vec3(0.7f, 0.7f, 0.7f));
+	_directionalLight = new DirectionalLight(glm::vec3(20.0, 20.0, 20.0), glm::vec3(0.7f, 0.7f, 0.7f));
 }
 
 void Renderer::Render(const Mesh& mesh, Material& material, glm::mat4 modelMatrix)
@@ -37,7 +37,7 @@ void Renderer::Render(const MeshGroup& meshGroup, Material& material, glm::mat4 
 {
 	for (auto m : meshGroup.GetMeshes())
 	{
-		Render(m, material, modelMatrix);
+		Render(*m, material, modelMatrix);
 	}
 }
 

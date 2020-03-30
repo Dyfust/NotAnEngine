@@ -1,3 +1,7 @@
 cd CMake
-cmake .. "Unix Makefiles"
+cmake ..
+
+move NotAnEngine.sln ../NotAnEngine
+move NotAnEngine.vcxproj ../NotAnEngine
+move NotAnEngine.vcxproj.filters ../NotAnEngine
 PAUSE

@@ -4,7 +4,7 @@
 Camera::Camera()
 {
 	SetPerspective(_defaultFOV, _defaultAspectRatio, _defaultNear, _defaultFar);
-	SetLookAt(glm::vec3(0.0, 0.0, 1.0), glm::vec3(0.0, 0.0, 0.0), glm::vec3(0, 1, 0)); // Default
+	SetLookAt(glm::vec3(-5.0, 3.0, 4.0), glm::vec3(5.0, 0.0, 5.0), glm::vec3(0, 1, 0)); // Default
 }
 
 Camera::Camera(float fov, float aspect_ratio, float near, float far)
@@ -115,7 +115,7 @@ const glm::mat4& Camera::GetProjectionViewMatrix() const
 	return _projectionViewMatrix;
 }
 
-const glm::vec3& Camera::GetPosition() const
+const glm::vec3 Camera::GetPosition() const
 {
 	return glm::vec3(_worldMatrix[3]);
 }
