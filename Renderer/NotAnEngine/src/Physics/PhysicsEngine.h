@@ -1,12 +1,15 @@
 #pragma once
 #include "glm.hpp"
 #include <vector>
+#include <functional>
 
 class PhysicsBody2D;
+class Collider2D;
 
 class PhysicsEngine
 {
 public:
+using CollisionFunction = std::function<glm::vec2(Collider2D* a, Collider2D* b)>;
 	PhysicsEngine(glm::vec2 gravity, float fixedTimeStep);
 	~PhysicsEngine();
 
@@ -21,4 +24,7 @@ private:
 	float _accumulatedTime;
 
 	glm::vec2 _gravity;
+
+protected:
+	static CollisionFunction CollisionFunctions[];
 };

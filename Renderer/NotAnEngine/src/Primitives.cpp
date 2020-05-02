@@ -93,6 +93,50 @@ Mesh * Primitives::GenerateSphere(float radius, int stackCount, int sectorCount)
 	return new Mesh(vertices, index_buffer);
 }
 
+Mesh* Primitives::GenerateCircle(float radius, int sectors)
+{
+	std::vector<Vertex> vertices;
+	std::vector<unsigned int> indices;
+	float step = 360.0f / sectors;
+
+	glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f);
+	glm::vec3 normal = glm::vec3(0.0f, 0.0f, -1.0f);
+	glm::vec2 texcoord = glm::vec2(0.0f);
+	Vertex vert = Vertex(position, normal, texcoord);
+	vertices.push_back(vert);
+
+	for (size_t i = 0; i < sectors; i++)
+	{
+		float iStep = step * i * (PI / 180.0f);
+		glm::vec3 position = radius * glm::vec3(cos(iStep), sin(iStep), 0.0f);
+		glm::vec3 normal = glm::vec3(0.0f, 0.0f, -1.0f);
+		glm::vec2 texcoord = glm::vec2(0.0f);
+
+		Vertex vert = Vertex(position, normal, texcoord);
+		vertices.push_back(vert);
+	}
+
+	int triangles = sectors + 1;
+	for (int tri = 1; tri < triangles; tri++)
+	{
+		if (tri < triangles - 1)
+		{
+			indices.push_back(tri);
+			indices.push_back(tri + 1);
+			indices.push_back(0);
+		}
+		else
+		{
+			indices.push_back(tri);
+			indices.push_back(1);
+			indices.push_back(0);
+		}
+	}
+
+	return new Mesh(vertices, indices);
+}
+
+
 Mesh* Primitives::GenerateQuad()
 {
 	Mesh* ret = nullptr;

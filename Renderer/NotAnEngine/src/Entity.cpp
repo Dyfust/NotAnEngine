@@ -1,4 +1,7 @@
 #include "Entity.h"
+#include "Physics/2D/RigidBody2D.h"
+#include "Physics/2D/Collider2D.h"
+#include "Physics/2D/Circle.h"
 #include <iostream>
 
 void Entity::UpdateWorldMatrix()
@@ -19,6 +22,23 @@ void Entity::UpdateChildrenWorldMatrix()
 	}
 }
 
+Entity::Entity()
+{
+	_parent = nullptr;
+	_localMatrix = glm::mat4(1);
+	UpdateWorldMatrix();
+}
+
+Entity::~Entity()
+{
+
+}
+
+void Entity::SetPhysicsBody(PhysicsBody2D* physicsBody2D)
+{
+	_physicsBody2D = physicsBody2D;
+}
+
 void Entity::Translate(glm::vec3 translation)
 {
 	_localMatrix = glm::translate(_localMatrix, translation);
@@ -36,6 +56,11 @@ void Entity::Rotate(glm::vec3 axis, float angle)
 	// Quaternion rotation.
 	_localMatrix = glm::rotate(_localMatrix, angle, axis);
 	UpdateWorldMatrix();
+}
+
+void Entity::SetPosition(glm::vec3 position)
+{
+	_localMatrix[3] = glm::vec4(position, 1);
 }
 
 void Entity::SetParent(Entity* parent)
@@ -60,4 +85,19 @@ void Entity::AddChild(Entity* child)
 	}
 
 	_children.push_back(child);
+}
+
+glm::mat4 Entity::GetWorldMatrix() const
+{
+	return _worldMatrix;
+}
+
+glm::vec3 Entity::GetPosition() const
+{
+	return _worldMatrix[3];
+}
+
+PhysicsBody2D& Entity::GetPhysicsBody() const
+{
+	return *_physicsBody2D;
 }

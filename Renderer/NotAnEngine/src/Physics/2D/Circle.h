@@ -1,14 +1,22 @@
 #pragma once
 #include "Collider2D.h"
 
+class Entity;
+
 class Circle : public Collider2D
 {
 public:
-	Circle(glm::vec2 position, float radius) : Collider2D(position), _radius(radius)
+	Circle(float radius) : _radius(radius)
 	{ }
 
-	virtual Collider2DType GetColliderType() override { return Collider2DType::CIRCLE; }
+	virtual Shape2D GetColliderType() override { return Shape2D::Circle; }
+
+	float GetRadius() const
+	{
+		return _radius;
+	}
 
 private:
+	friend class CollisionManager2D;
 	float _radius;
 };

@@ -1,26 +1,38 @@
 #pragma once
 #include "Collider2D.h"
+#include "../../Entity.h"
 #include "glm.hpp"
 
 class PhysicsBody2D
 {
 public:
-	PhysicsBody2D(/*Transform* transform*/ Collider2D* collider) 
+	PhysicsBody2D(Entity* transform, Collider2D* collider) 
 	{
+		_transform = transform;
 		_collider = collider;
-		_colliderType = collider->GetColliderType();
 	}
 
-	~PhysicsBody2D()
+	virtual ~PhysicsBody2D()
 	{
-		delete _collider;
+
 	}
 
-	virtual void FixedUpdate(glm::vec2 gravity, float timeStep) = 0;
-	Collider2D::Collider2DType GetColliderType() { return _colliderType; }
+	void SetPosition(glm::vec3 position)
+	{
+		_transform->SetPosition(position);
+	}
+
+	glm::vec3 GetPosition() const
+	{
+		return _transform->GetPosition();
+	}
+	
+	Collider2D* GetCollider() const
+	{
+		return _collider;
+	}
 
 protected:
-	/*Transform* _transform;*/
-	Collider2D::Collider2DType _colliderType;
+	Entity* _transform;
 	Collider2D* _collider;
 };

@@ -50,6 +50,10 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Entity.cpp" />
+    <ClCompile Include="src\Physics\PhysicsEngine.cpp" />
+    <ClCompile Include="src\Physics\2D\RigidBody2D.cpp" />
+    <ClCompile Include="src\Physics\2D\CollisionManager2D.cpp" />
+    <ClCompile Include="src\Physics\2D\Line.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="C:\Users\Rey\Desktop\Repos\Renderer\Renderer\NotAnEngine\src\Camera.h">
@@ -109,9 +113,14 @@
     <ClInclude Include="src\Events\WindowResizeEvent.h" />
     <ClInclude Include="src\Events\EventDispatcher.h" />
     <ClInclude Include="src\Events\MouseMovedEvent.h" />
-    <ClInclude Include="src\Physics\Circle.h" />
-    <ClInclude Include="src\Physics\Collider2D.h" />
-    <ClInclude Include="src\Physics\PhysicsBody2D.h" />
+    <ClInclude Include="src\Physics\2D\AABB.h" />
+    <ClInclude Include="src\Physics\2D\Circle.h" />
+    <ClInclude Include="src\Physics\2D\Collider2D.h" />
+    <ClInclude Include="src\Physics\2D\PhysicsBody2D.h" />
+    <ClInclude Include="src\Physics\2D\Line.h" />
+    <ClInclude Include="src\Physics\PhysicsEngine.h" />
+    <ClInclude Include="src\Physics\2D\RigidBody2D.h" />
+    <ClInclude Include="src\Physics\2D\CollisionManager2D.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">

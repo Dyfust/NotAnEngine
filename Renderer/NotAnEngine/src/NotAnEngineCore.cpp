@@ -2,14 +2,23 @@
 #include "Renderer.h"
 #include "Window.h"
 #include "Camera.h"
+#include "Events/EventDispatcher.h"
+#include "Events/MousePressEvent.h"
+#include "Events/MouseReleaseEvent.h"
 #include "Texture.h"
 #include "Material.h"
 #include "Shader.h"
 #include "Primitives.h"
 #include "MeshGroup.h"
-#include "Events/EventDispatcher.h"
-#include "Events/MousePressEvent.h"
-#include "Events/MouseReleaseEvent.h"
+#include "Entity.h"
+#include "Physics/PhysicsEngine.h"
+#include "Physics/2D/PhysicsBody2D.h"
+#include "Physics/2D/RigidBody2D.h"
+#include "Physics/2D/Collider2D.h"
+#include "Physics/2D/AABB.h"
+#include "Physics/2D/Circle.h"
+#include "Physics/2D/Line.h"
+
 #include <iostream>
 #include <functional>
 
@@ -26,7 +35,7 @@ NotAnEngineCore::NotAnEngineCore(const char* title, unsigned int width, unsigned
 
 	_window = new Window(width, height, title);
 	_window->MakeContextCurrent();
-	//_window->SetOnEventCallback(std::bind(&NotAnEngineCore::OnEvent, this, std::placeholders::_1));
+	_window->SetOnEventCallback(std::bind(&NotAnEngineCore::OnEvent, this, std::placeholders::_1));
 
 	if (ogl_LoadFunctions() == ogl_LOAD_FAILED)
 	{
@@ -97,57 +106,72 @@ void NotAnEngineCore::Terminate()
 
 void NotAnEngineCore::OnStart()
 {	
-	_shader2D = new Shader("working\\Shaders\\2d_vertex.glsl", "working\\Shaders\\2d_frag.glsl");
-	_shader2D->BindUniformBlock("Engine", 5);
+	_physicsEngine = new PhysicsEngine(glm::vec2(0.0f, -10.0f), 0.016f);
 
-	_spriteTexture = new Texture("working\\Textures\\Ninja.png");
-	glm::vec4 spriteColor = glm::vec4(1.0, 1.0, 1.0, 1.0);
+	_circleEntity = new Entity();
+	_circleEntity2 = new Entity();
+	_squareEntity = new Entity();
+	_squareEntity2 = new Entity();
 
-	_spriteMaterial = new Material(*_shader2D);
-	_spriteMaterial->SetValue("color", GL_FLOAT_VEC4, (void*)&spriteColor);
-	_spriteMaterial->AddTexture("albedo_map", _spriteTexture);
-
-	_shaderPhong = new Shader("working\\Shaders\\lit_vertex.glsl", "working\\Shaders\\lit_frag.glsl");
-	_shaderPhong->BindUniformBlock("Engine", 5);
-
-	_swordShield = new MeshGroup();
-	_swordShield->Load("working\\Models\\SwordAndShield\\meshSwordShield.obj");
+	Entity* _bottomLineEntity = new Entity();
+	Entity* _topLineEntity = new Entity();
+	Entity* _leftLineEntity = new Entity();
+	Entity* _rightLineEntity = new Entity();
 	
-	_swordAlbedo = new Texture("working\\Textures\\SwordAndShield\\Sword_Albedo.png");
-	_swordNormal = new Texture("working\\Textures\\SwordAndShield\\Sword_Normal.png");
+	Collider2D* bottomLineCollider = new Line(glm::vec2(0.0f, 1.0f), -10.0f);
+	Collider2D* topLineCollider = new Line(glm::vec2(0.0f, -1.0f), -10.0f);
+	Collider2D* leftLineCollider = new Line(glm::vec2(1.0f, 0.0f), -17.5f);
+	Collider2D* rightLineCollider = new Line(glm::vec2(-1.0f, 0.0f), -18.0f);
 
-	_shieldAlbedo = new Texture("working\\Textures\\SwordAndShield\\Shield_Albedo.png");
-	_shieldNormal = new Texture("working\\Textures\\SwordAndShield\\Shield_Normal.png");
+	Collider2D* circleEntityCollider = new Circle(2.0f);
+	Collider2D* circleEntityCollider2 = new Circle(4.0f);
+	Collider2D* squareEntityCollider = new AABB(glm::vec2(4.0f));
+	Collider2D* squareEntityCollider2 = new AABB(glm::vec2(2.0f));
 
-	_swordMaterial = new Material(*_shaderPhong);
-	_swordMaterial->AddTexture("albedo_map", _swordAlbedo);
-	_swordMaterial->AddTexture("normal_map", _swordNormal);
-	_swordMaterial->SetValue("object_color", GL_FLOAT_VEC4, (void*)&_swordColor);
-	_swordMaterial->SetValue("shininess", GL_FLOAT, (void*)&_swordShininess);
-	_swordMaterial->SetValue("specular_reflectance", GL_FLOAT, (void*)&_swordReflectance);
+	PhysicsBody2D* bottomLineBody = new PhysicsBody2D(_bottomLineEntity, bottomLineCollider);
+	PhysicsBody2D* topLineBody = new PhysicsBody2D(_topLineEntity, topLineCollider);
+	PhysicsBody2D* leftLineBody = new PhysicsBody2D(_leftLineEntity, leftLineCollider);
+	PhysicsBody2D* rightLineBody = new PhysicsBody2D(_rightLineEntity, rightLineCollider);
 
-	_shieldMaterial = new Material(*_shaderPhong);
-	_shieldMaterial->AddTexture("albedo_map", _shieldAlbedo);
-	_shieldMaterial->AddTexture("normal_map", _shieldNormal);
-	_shieldMaterial->SetValue("object_color", GL_FLOAT_VEC4, (void*)& _shieldColor);
-	_shieldMaterial->SetValue("shininess", GL_FLOAT, (void*)& _shieldShininess);
-	_shieldMaterial->SetValue("specular_reflectance", GL_FLOAT, (void*)& _shieldReflectance);
+	RigidBody2D* circleEntityRigidBody = new RigidBody2D(_circleEntity, circleEntityCollider, 1.0f, 1.0f);;
+	RigidBody2D* circleEntityRigidBody2 = new RigidBody2D(_circleEntity2, circleEntityCollider2, 3.0f, 1.0f);;
 
-	_model = glm::rotate(_model, -3.14159265359f / 2.0f, glm::vec3(0.0f, 1.0f, 0.0f));
+	RigidBody2D* squareEntityRigidBody = new RigidBody2D(_squareEntity, squareEntityCollider, 3.0f, 0.5f);;
+	RigidBody2D* squareEntityRigidBody2 = new RigidBody2D(_squareEntity2, squareEntityCollider2, 1.0f, 0.5f);;
 
-	_sun = Primitives::GenerateSphere(1.0f, 20, 20);
-	_sunAlbedo = new Texture("working\\Textures\\Sun.jpg");
-	_sunMaterial = new Material(*_shader2D);
-	_sunMaterial->AddTexture("albedo_map", _sunAlbedo);
+	_circleEntity->SetPhysicsBody(circleEntityRigidBody);
+	_circleEntity2->SetPhysicsBody(circleEntityRigidBody2);
+
+	_circleEntity->Translate(glm::vec3(20.0f, 0.0f, 0.0f));
+	_squareEntity->Translate(glm::vec3(15.0f, 0.0f, 0.0f));
+	_squareEntity2->Translate(glm::vec3(-10.0f, 0.0f, 0.0f));
+
+	_squareEntity->SetPhysicsBody(squareEntityRigidBody);
+	_squareEntity2->SetPhysicsBody(squareEntityRigidBody2);
+
+
+	_physicsEngine->AddPhysicsBody2D(bottomLineBody);
+	_physicsEngine->AddPhysicsBody2D(topLineBody);
+	_physicsEngine->AddPhysicsBody2D(leftLineBody);
+	_physicsEngine->AddPhysicsBody2D(rightLineBody);
+	_physicsEngine->AddPhysicsBody2D(&_circleEntity->GetPhysicsBody());
+	_physicsEngine->AddPhysicsBody2D(&_circleEntity2->GetPhysicsBody());
+	_physicsEngine->AddPhysicsBody2D(&_squareEntity->GetPhysicsBody());
+	_physicsEngine->AddPhysicsBody2D(&_squareEntity2->GetPhysicsBody());
+
+	circleEntityRigidBody->AddForce(glm::vec2(-20.0f, 0.0f));
 }
 
 void NotAnEngineCore::OnUpdate(float deltaTime)
 {
+	_physicsEngine->Update(deltaTime);
 	_mainCamera->Update(deltaTime);
 
-	_renderer->Render(*_sun, *_sunMaterial, glm::mat4(1));
-	_renderer->Render(*_swordShield->GetMeshes().at(1), *_swordMaterial, _model);
-	_renderer->Render(*_swordShield->GetMeshes().at(0), *_shieldMaterial, _model);
+	glPolygonMode(GL_FRONT, GL_LINE);
+	_renderer->RenderCircle(_circleEntity->GetWorldMatrix()[3], 2.0f, glm::vec4(0.0f, 1.0f, 0.0f, 1.0f));
+	_renderer->RenderCircle(_circleEntity2->GetWorldMatrix()[3], 4.0f, glm::vec4(0.0f, 1.0f, 0.0f, 1.0f));
+	_renderer->RenderQuad(_squareEntity->GetWorldMatrix()[3], glm::vec2(4.0f), glm::vec4(1.0f, 0.0f, 0.0f, 1.0f));
+	_renderer->RenderQuad(_squareEntity2->GetWorldMatrix()[3], glm::vec2(2.0f), glm::vec4(1.0f, 0.0f, 0.0f, 1.0f));
 }
 
 void NotAnEngineCore::OnFixedUpdate(float timeStep)
@@ -157,9 +181,7 @@ void NotAnEngineCore::OnFixedUpdate(float timeStep)
 
 void NotAnEngineCore::OnShutdown()
 {
-	//delete _spriteMaterial;
-	//delete _spriteTexture;
-	delete _shader2D;
+
 }
 
 void NotAnEngineCore::SetClearColor(float r, float g, float b, float a)

@@ -4,7 +4,7 @@
 Camera::Camera()
 {
 	SetPerspective(_defaultFOV, _defaultAspectRatio, _defaultNear, _defaultFar);
-	SetLookAt(glm::vec3(-5.0, 3.0, 4.0), glm::vec3(5.0, 0.0, 5.0), glm::vec3(0, 1, 0)); // Default
+	SetLookAt(glm::vec3(0.0f, 0.0f, 10.0), glm::vec3(0.0, 0.0f, 0.0), glm::vec3(0, 1, 0)); // Default
 }
 
 Camera::Camera(float fov, float aspect_ratio, float near, float far)
@@ -23,6 +23,7 @@ void Camera::UpdatePVMatrix()
 void Camera::SetPerspective(float fov, float aspectRatio, float near, float far)
 {
 	_projectionMatrix = glm::perspective(fov, aspectRatio, near, far);
+	//_projectionMatrix = glm::ortho(-64, 64, -32, 32, -1, 1);
 	UpdatePVMatrix();
 }
 
@@ -63,7 +64,7 @@ void Camera::Update(float deltaTime)
 	glm::vec3 up_direction = (glm::vec3)GetWorldMatrix()[1];
 	glm::vec3 right_direction = (glm::vec3)GetWorldMatrix()[0];
 
-	glm::vec3 move_direction = -input.y * forward_direction + input.x * right_direction;
+	glm::vec3 move_direction = input.y * up_direction + input.x * right_direction;
 	glm::normalize(move_direction);
  
 	position += move_direction * _speed * deltaTime;
@@ -79,20 +80,20 @@ void Camera::Update(float deltaTime)
 
 	glfwSetCursorPos(context, 1280 * 0.5, 720 * 0.5);
 
-	if (delta_x || delta_y)
-	{
-		// Identity matrix to accumulate rotation
-		auto rotation = glm::mat4(1.0f);
-		// Left / Right rotation
-		rotation = glm::rotate(rotation, float(_angularSpeed * deltaTime * -delta_x), glm::vec3(_viewMatrix[1]));
+	//if (delta_x || delta_y)
+	//{
+	//	// Identity matrix to accumulate rotation
+	//	auto rotation = glm::mat4(1.0f);
+	//	// Left / Right rotation
+	//	rotation = glm::rotate(rotation, float(_angularSpeed * deltaTime * -delta_x), glm::vec3(_viewMatrix[1]));
 
-		// Up / Down rotation
-		rotation = glm::rotate(rotation, float(_angularSpeed * deltaTime * -delta_y), glm::vec3(1.0f, 0.0f, 0.0f));
-		// Apply the rotation to the camera
-		_worldMatrix = _worldMatrix * rotation;
-		// Update PxV
-		UpdatePVMatrix();
-	}
+	//	// Up / Down rotation
+	//	rotation = glm::rotate(rotation, float(_angularSpeed * deltaTime * -delta_y), glm::vec3(1.0f, 0.0f, 0.0f));
+	//	// Apply the rotation to the camera
+	//	_worldMatrix = _worldMatrix * rotation;
+	//	// Update PxV
+	//	UpdatePVMatrix();
+	//}
 }
 
 const glm::mat4& Camera::GetProjectionMatrix() const
